@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.*
+!.env.example
+# Local-only list of real names/emails/domains the scanner must block. Never commit it.
+.scan-denylist
+# Raw model responses can be large; results/*.json are the committed record.
+**/evals/cache/
+# Downloaded regulation text is fetched, not redistributed.
+02-regulation-qa/docs/raw/
+*.log
+.DS_Store

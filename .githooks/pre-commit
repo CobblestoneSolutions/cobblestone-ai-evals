@@ -1,0 +1,3 @@
+#!/bin/sh
+# Blocks commits that contain keys, private data, or denylisted real names.
+npm run --silent scan || { echo "pre-commit: scan failed — commit blocked."; exit 1; }
