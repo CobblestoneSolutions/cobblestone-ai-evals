@@ -10,7 +10,7 @@ the failures it was meant to fix. The report checks whether it actually fixed th
 
 | # | Project | What it tests | Status |
 |---|---|---|---|
-| 01 | [Support assistant](01-support-assistant/) | Answers customer questions for a fictional ice cream shop; escalates allergens, complaints and unknowns to a human; resists prompt injection | Test set ready (40 cases); v1 not yet run |
+| 01 | [Support assistant](01-support-assistant/) | Answers customer questions for a fictional ice cream shop; escalates allergens, complaints and unknowns to a human; resists prompt injection | **v1 67.5% → v4 100%** on 40 cases; **44.4%** on 9 held-out |
 | 02 | [Regulation Q&A](02-regulation-qa/) | Answers Indiana / Vanderburgh County / FDA Food Code questions **only** from the source text, with section citations, and says "not covered" when it isn't | Planned |
 | 03 | [Receipt extraction](03-receipt-extraction/) | Turns receipt images into structured expenses, then checks its own output (line items sum, tax math, plausible date) and flags failures for a human | Planned |
 
@@ -44,6 +44,9 @@ npm run eval -- 00-example --prompt v1 --provider mock
 # live run; saves evals/results/v1.json and regenerates evals/REPORT.md
 npm run eval -- 01-support-assistant --prompt v1
 
+# a held-out set: own results directory, kept out of REPORT.md
+npm run eval -- 01-support-assistant --prompt v4 --cases heldout
+
 # re-grade a past run from recorded responses — no network, no cost
 npm run eval -- 01-support-assistant --prompt v1 --provider replay
 
@@ -66,6 +69,7 @@ NN-project/
   project.ts        how the harness calls this system and which checks apply
   prompts/vN.md     prompt versions, each with a change note
   evals/cases.jsonl the test set
+  evals/heldout.jsonl optional held-out set, scored separately
   evals/results/    one JSON record per prompt version (committed)
   evals/REPORT.md   generated
   CASE_STUDY.md     one-page write-up
@@ -74,9 +78,16 @@ scripts/scan.ts     blocks keys, emails, phone numbers, card numbers and denylis
 
 ## Trusting the grader
 
-A judge model can be wrong too. For each project, a sample of judge verdicts is
-re-graded by hand and the agreement rate is published in that project's case study.
-Rule-based checks are preferred wherever the answer can be checked mechanically.
+A judge model can be wrong too, and so can a test case. Failing cases are re-read by hand
+before any prompt change, and what that audit finds is published in the project README —
+project 01 documents three grading faults it turned up, each fixed with every version
+re-run so the numbers stayed comparable. Rule-based checks are preferred wherever the
+answer can be checked mechanically.
+
+**Held-out cases.** A prompt tuned against its own test set scores its fit, not its skill,
+so a project may also carry a held-out set written after the prompt was finished, by
+someone who did not read the failures. It is run once, no prompt is changed afterward, and
+its score is reported separately from the headline number.
 
 ## Data policy
 
