@@ -73,6 +73,9 @@ npm install && npm run setup-hooks
 - **Never commit real data.** `npm run scan` blocks keys, emails, phone numbers, card numbers
   and any name in `.scan-denylist` (gitignored — it holds the real names, so it must never be
   pushed). Mark a deliberate match with `scan:allow` on the line.
+- **Stage explicit paths, never `git add -A`.** Several agents and one human share this
+  working tree, so anything untracked may not be yours. `git add -A` once swept a file this
+  session had never read into an unrelated commit.
 - **`npm run check`** (typecheck + tests + scan) before you hand the baton on.
 - **Every number in this repo comes from a run file** in `evals/results/`. Do not write a score,
   a pass rate or a delta into a README or a report that you did not compute from a run. See
