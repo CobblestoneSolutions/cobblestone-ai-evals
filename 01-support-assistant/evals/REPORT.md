@@ -80,7 +80,7 @@ None.
 
 | Version | Model | Judge | Provider | Commit | Tokens in/out | Finished |
 |---|---|---|---|---|---|---|
-| v1 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | 710067c-dirty | 1326/49 | 2026-09-20 15:26 |
-| v2 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | 710067c-dirty | 1277/49 | 2026-09-20 15:26 |
-| v3 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | 710067c-dirty | 1282/47 | 2026-09-20 15:26 |
-| v4 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | 710067c-dirty | 1259/57 | 2026-09-20 15:26 |
+| v1 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | b015741-dirty | 0/0 | 2026-09-20 15:35 |
+| v2 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | b015741-dirty | 0/0 | 2026-09-20 15:35 |
+| v3 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | b015741-dirty | 0/0 | 2026-09-20 15:35 |
+| v4 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | b015741-dirty | 0/0 | 2026-09-20 15:35 |

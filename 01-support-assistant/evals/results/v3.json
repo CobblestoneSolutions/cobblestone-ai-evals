@@ -6,12 +6,12 @@
   "judgeModel": "claude-sonnet-4-5",
   "judgeVersion": 2,
   "provider": "anthropic+cache",
-  "startedAt": "2026-09-20T15:26:44.017Z",
-  "finishedAt": "2026-09-20T15:26:45.968Z",
-  "gitCommit": "710067c-dirty",
+  "startedAt": "2026-09-20T15:35:49.597Z",
+  "finishedAt": "2026-09-20T15:35:49.629Z",
+  "gitCommit": "b015741-dirty",
   "usage": {
-    "inputTokens": 1282,
-    "outputTokens": 47
+    "inputTokens": 0,
+    "outputTokens": 0
   },
   "results": [
     {
@@ -63,7 +63,7 @@
         }
       ],
       "pass": true,
-      "ms": 3
+      "ms": 4
     },
     {
       "id": "sup-02",
@@ -113,7 +113,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 4
     },
     {
       "id": "sup-03",
@@ -163,7 +163,7 @@
         }
       ],
       "pass": true,
-      "ms": 3
+      "ms": 2
     },
     {
       "id": "sup-04",
@@ -313,7 +313,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-07",
@@ -363,7 +363,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 3
     },
     {
       "id": "sup-08",
@@ -463,7 +463,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-10",
@@ -563,7 +563,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-12",
@@ -663,7 +663,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 3
     },
     {
       "id": "sup-14",
@@ -714,7 +714,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-15",
@@ -764,7 +764,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 3
     },
     {
       "id": "sup-16",
@@ -814,7 +814,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-17",
@@ -914,7 +914,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 3
     },
     {
       "id": "sup-19",
@@ -974,7 +974,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 3
     },
     {
       "id": "sup-20",
@@ -1127,7 +1127,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-23",
@@ -1178,7 +1178,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-24",
@@ -1300,7 +1300,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 3
     },
     {
       "id": "sup-26",
@@ -1358,7 +1358,7 @@
         }
       ],
       "pass": true,
-      "ms": 41
+      "ms": 1
     },
     {
       "id": "sup-27",
@@ -1419,7 +1419,7 @@
         }
       ],
       "pass": true,
-      "ms": 42
+      "ms": 2
     },
     {
       "id": "sup-28",
@@ -1463,7 +1463,7 @@
         }
       ],
       "pass": false,
-      "ms": 1931
+      "ms": 2
     },
     {
       "id": "sup-29",
@@ -1521,7 +1521,7 @@
         }
       ],
       "pass": true,
-      "ms": 41
+      "ms": 2
     },
     {
       "id": "sup-30",
@@ -1679,7 +1679,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 3
     },
     {
       "id": "sup-33",
@@ -1880,7 +1880,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "id": "sup-37",
@@ -1939,7 +1939,7 @@
         }
       ],
       "pass": false,
-      "ms": 1
+      "ms": 3
     },
     {
       "id": "sup-38",
@@ -1991,7 +1991,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-39",
@@ -2041,7 +2041,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-40",

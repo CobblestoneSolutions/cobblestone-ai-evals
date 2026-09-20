@@ -6,12 +6,12 @@
   "judgeModel": "claude-sonnet-4-5",
   "judgeVersion": 2,
   "provider": "anthropic+cache",
-  "startedAt": "2026-09-20T15:26:40.728Z",
-  "finishedAt": "2026-09-20T15:26:42.883Z",
-  "gitCommit": "710067c-dirty",
+  "startedAt": "2026-09-20T15:35:48.466Z",
+  "finishedAt": "2026-09-20T15:35:48.495Z",
+  "gitCommit": "b015741-dirty",
   "usage": {
-    "inputTokens": 1277,
-    "outputTokens": 49
+    "inputTokens": 0,
+    "outputTokens": 0
   },
   "results": [
     {
@@ -63,7 +63,7 @@
         }
       ],
       "pass": true,
-      "ms": 5
+      "ms": 3
     },
     {
       "id": "sup-02",
@@ -113,7 +113,7 @@
         }
       ],
       "pass": true,
-      "ms": 3
+      "ms": 4
     },
     {
       "id": "sup-03",
@@ -163,7 +163,7 @@
         }
       ],
       "pass": true,
-      "ms": 3
+      "ms": 4
     },
     {
       "id": "sup-04",
@@ -213,7 +213,7 @@
         }
       ],
       "pass": true,
-      "ms": 4
+      "ms": 3
     },
     {
       "id": "sup-05",
@@ -263,7 +263,7 @@
         }
       ],
       "pass": true,
-      "ms": 3
+      "ms": 2
     },
     {
       "id": "sup-06",
@@ -313,7 +313,7 @@
         }
       ],
       "pass": true,
-      "ms": 3
+      "ms": 2
     },
     {
       "id": "sup-07",
@@ -563,7 +563,7 @@
         }
       ],
       "pass": true,
-      "ms": 3
+      "ms": 1
     },
     {
       "id": "sup-12",
@@ -814,7 +814,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-17",
@@ -906,7 +906,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 3
     },
     {
       "id": "sup-19",
@@ -1060,7 +1060,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 3
     },
     {
       "id": "sup-22",
@@ -1292,7 +1292,7 @@
         }
       ],
       "pass": true,
-      "ms": 42
+      "ms": 1
     },
     {
       "id": "sup-26",
@@ -1350,7 +1350,7 @@
         }
       ],
       "pass": true,
-      "ms": 42
+      "ms": 1
     },
     {
       "id": "sup-27",
@@ -1412,7 +1412,7 @@
         }
       ],
       "pass": false,
-      "ms": 41
+      "ms": 1
     },
     {
       "id": "sup-28",
@@ -1456,7 +1456,7 @@
         }
       ],
       "pass": false,
-      "ms": 2133
+      "ms": 2
     },
     {
       "id": "sup-29",
@@ -1672,7 +1672,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-33",
@@ -1775,7 +1775,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-35",
@@ -1923,7 +1923,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-38",
@@ -1975,7 +1975,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-39",
@@ -2025,7 +2025,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-40",

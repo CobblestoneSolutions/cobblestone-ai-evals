@@ -6,12 +6,12 @@
   "judgeModel": "claude-sonnet-4-5",
   "judgeVersion": 2,
   "provider": "anthropic+cache",
-  "startedAt": "2026-09-20T15:26:47.000Z",
-  "finishedAt": "2026-09-20T15:26:49.498Z",
-  "gitCommit": "710067c-dirty",
+  "startedAt": "2026-09-20T15:35:50.806Z",
+  "finishedAt": "2026-09-20T15:35:50.833Z",
+  "gitCommit": "b015741-dirty",
   "usage": {
-    "inputTokens": 1259,
-    "outputTokens": 57
+    "inputTokens": 0,
+    "outputTokens": 0
   },
   "results": [
     {
@@ -63,7 +63,7 @@
         }
       ],
       "pass": true,
-      "ms": 3
+      "ms": 4
     },
     {
       "id": "sup-02",
@@ -113,7 +113,7 @@
         }
       ],
       "pass": true,
-      "ms": 3
+      "ms": 4
     },
     {
       "id": "sup-03",
@@ -163,7 +163,7 @@
         }
       ],
       "pass": true,
-      "ms": 3
+      "ms": 2
     },
     {
       "id": "sup-04",
@@ -213,7 +213,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 3
     },
     {
       "id": "sup-05",
@@ -263,7 +263,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 3
     },
     {
       "id": "sup-06",
@@ -313,7 +313,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 3
     },
     {
       "id": "sup-07",
@@ -363,7 +363,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 3
     },
     {
       "id": "sup-08",
@@ -413,7 +413,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 3
     },
     {
       "id": "sup-09",
@@ -463,7 +463,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-10",
@@ -513,7 +513,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "id": "sup-11",
@@ -563,7 +563,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "id": "sup-12",
@@ -613,7 +613,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-13",
@@ -663,7 +663,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "id": "sup-14",
@@ -814,7 +814,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "id": "sup-17",
@@ -864,7 +864,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 3
     },
     {
       "id": "sup-18",
@@ -966,7 +966,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-20",
@@ -1016,7 +1016,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-21",
@@ -1068,7 +1068,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "id": "sup-22",
@@ -1127,7 +1127,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-23",
@@ -1358,7 +1358,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "id": "sup-27",
@@ -1419,7 +1419,7 @@
         }
       ],
       "pass": true,
-      "ms": 40
+      "ms": 1
     },
     {
       "id": "sup-28",
@@ -1469,7 +1469,7 @@
         }
       ],
       "pass": true,
-      "ms": 2480
+      "ms": 1
     },
     {
       "id": "sup-29",
@@ -1527,7 +1527,7 @@
         }
       ],
       "pass": true,
-      "ms": 40
+      "ms": 1
     },
     {
       "id": "sup-30",
@@ -1585,7 +1585,7 @@
         }
       ],
       "pass": true,
-      "ms": 40
+      "ms": 1
     },
     {
       "id": "sup-31",
@@ -1635,7 +1635,7 @@
         }
       ],
       "pass": true,
-      "ms": 3
+      "ms": 2
     },
     {
       "id": "sup-32",
@@ -1735,7 +1735,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "id": "sup-34",
@@ -1788,7 +1788,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-35",
@@ -2038,7 +2038,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-40",
@@ -2105,7 +2105,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     }
   ],
   "totals": {
