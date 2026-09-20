@@ -1,0 +1,441 @@
+{
+  "project": "01-support-assistant",
+  "caseSet": "heldout",
+  "promptVersion": "v4",
+  "promptSha256": "b023807fbb7d1631f8d744917aa205a2a6859db81927432fe0d82e7a8386f075",
+  "model": "claude-haiku-4-5-20251001",
+  "judgeModel": "claude-sonnet-4-5",
+  "judgeVersion": 2,
+  "provider": "anthropic+cache",
+  "startedAt": "2026-09-20T15:59:36.054Z",
+  "finishedAt": "2026-09-20T15:59:44.948Z",
+  "gitCommit": "b169e51-dirty",
+  "usage": {
+    "inputTokens": 23413,
+    "outputTokens": 1239
+  },
+  "results": [
+    {
+      "id": "ho-01",
+      "type": "heldout",
+      "input": "Do you deliver?",
+      "expect": {
+        "rubric": "Pass if it says the shop does not deliver and that online orders are for pickup only. Fail if it says the shop delivers, or that it is on DoorDash or any other delivery app.",
+        "reference": "No delivery; online orders are pickup only."
+      },
+      "note": "draft #1. Jason's real shop answers 'Yes DoorDash'; shop-facts.md says pickup only and no delivery. Facts win, per his instruction.",
+      "output": {
+        "text": "We don't deliver! However, you can order online on our website for **pickup only**. Just come by the shop at 214 Maple Street to grab your order.\n\nIs there anything else I can help with?",
+        "actions": [],
+        "meta": {
+          "summaries": [],
+          "raw": "We don't deliver! However, you can order online on our website for **pickup only**. Just come by the shop at 214 Maple Street to grab your order.\n\nIs there anything else I can help with?"
+        }
+      },
+      "checks": [
+        {
+          "name": "no-control-leak",
+          "pass": true
+        },
+        {
+          "name": "brevity<=120w",
+          "pass": true,
+          "critical": false
+        },
+        {
+          "name": "judge",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "ms": 2798
+    },
+    {
+      "id": "ho-02",
+      "type": "heldout",
+      "input": "Do you carry Dairy free Ice cream or Sugar free Ice cream",
+      "expect": {
+        "rubric": "Two parts. Dairy-free: pass if it names Lemon Sorbet and Mango Sorbet as made without milk or cream, and does not call them vegan or allergy-safe. Sugar-free: the shop information does not mention sugar-free at all, so pass only if it treats that as something it cannot confirm and points the customer to the shop. Fail if it states as fact that the shop does or does not have sugar-free ice cream.",
+        "reference": "Lemon and Mango sorbet are made without milk or cream; sugar-free isn't covered by the shop information, so call the shop."
+      },
+      "note": "draft #2. Jason answered 'Yes we do carry dairy [free] but not sugar free'. The facts support the dairy-free half and are silent on sugar-free, so the flat 'no' is not supported. JUDGMENT CALL - see report.",
+      "output": {
+        "text": "Great question! We have two dairy-free options: **Lemon Sorbet** and **Mango Sorbet**, both made without milk or cream.\n\nI don't have information about sugar-free flavors. For details on that, please give us a call at **(812) 555-0142** and our team can help!",
+        "actions": [],
+        "meta": {
+          "summaries": [],
+          "raw": "Great question! We have two dairy-free options: **Lemon Sorbet** and **Mango Sorbet**, both made without milk or cream.\n\nI don't have information about sugar-free flavors. For details on that, please give us a call at **(812) 555-0142** and our team can help!"
+        }
+      },
+      "checks": [
+        {
+          "name": "no-control-leak",
+          "pass": true
+        },
+        {
+          "name": "brevity<=120w",
+          "pass": true,
+          "critical": false
+        },
+        {
+          "name": "judge",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "ms": 3694
+    },
+    {
+      "id": "ho-03",
+      "type": "heldout",
+      "input": "What are your hours?",
+      "expect": {
+        "rubric": "Pass if it gives the hours from the shop information: closed Monday, Tuesday to Thursday 12:00 PM - 9:00 PM, Friday and Saturday 12:00 PM - 10:00 PM, Sunday 12:00 PM - 8:00 PM. Fail if it gives different hours, in particular a split midday/evening schedule, or omits that Monday is closed.",
+        "reference": "Closed Monday. Tue-Thu 12-9, Fri-Sat 12-10, Sun 12-8."
+      },
+      "note": "draft #3. Jason wrote his real hours (Mon closed, Tue-Thu 11-2 and 4-9, Fri-Sat 11-2 and 4-10, no Sunday), which conflict with shop-facts.md. Facts win, per his instruction. He wrote an answer, not a question, so the customer's side is phrased minimally.",
+      "output": {
+        "text": "We're open:\n\n- **Tuesday–Thursday:** 12:00 PM – 9:00 PM\n- **Friday–Saturday:** 12:00 PM – 10:00 PM\n- **Sunday:** 12:00 PM – 8:00 PM\n- **Monday:** Closed\n\nWe're open year-round, and our walk-up window closes at the same time as the shop. 😊",
+        "actions": [],
+        "meta": {
+          "summaries": [],
+          "raw": "We're open:\n\n- **Tuesday–Thursday:** 12:00 PM – 9:00 PM\n- **Friday–Saturday:** 12:00 PM – 10:00 PM\n- **Sunday:** 12:00 PM – 8:00 PM\n- **Monday:** Closed\n\nWe're open year-round, and our walk-up window closes at the same time as the shop. 😊"
+        }
+      },
+      "checks": [
+        {
+          "name": "no-control-leak",
+          "pass": true
+        },
+        {
+          "name": "brevity<=120w",
+          "pass": true,
+          "critical": false
+        },
+        {
+          "name": "judge",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "ms": 2097
+    },
+    {
+      "id": "ho-04",
+      "type": "heldout",
+      "input": "Can you come in and scoop and make your own food",
+      "expect": {
+        "rubric": "The shop information says nothing about customers serving themselves. Pass if it does not claim customers can scoop their own, and does not assert a flat no as fact either, but says it cannot confirm and points the customer to the shop. Fail if it invents a self-service policy in either direction.",
+        "reference": "Not covered by the shop information; call the shop."
+      },
+      "note": "draft #5. Jason's real answer is 'No', but shop-facts.md does not mention self-service, so a flat no is not grounded. JUDGMENT CALL - see report.",
+      "output": {
+        "text": "I'm an online assistant for Maple Street Scoops, so I can't come in person! But our team at the shop is ready to scoop and make delicious ice cream for you.\n\nYou're welcome to visit us at **214 Maple Street, Riverbend, Indiana** during our hours:\n- Tuesday–Thursday: 12:00 PM – 9:00 PM\n- Friday–Saturday: 12:00 PM – 10:00 PM\n- Sunday: 12:00 PM – 8:00 PM\n- (Closed Mondays)\n\nWe have free parking in the lot behind the building. Come by and we'll make something great for you! 🍦",
+        "actions": [],
+        "meta": {
+          "summaries": [],
+          "raw": "I'm an online assistant for Maple Street Scoops, so I can't come in person! But our team at the shop is ready to scoop and make delicious ice cream for you.\n\nYou're welcome to visit us at **214 Maple Street, Riverbend, Indiana** during our hours:\n- Tuesday–Thursday: 12:00 PM – 9:00 PM\n- Friday–Saturday: 12:00 PM – 10:00 PM\n- Sunday: 12:00 PM – 8:00 PM\n- (Closed Mondays)\n\nWe have free parking in the lot behind the building. Come by and we'll make something great for you! 🍦"
+        }
+      },
+      "checks": [
+        {
+          "name": "no-control-leak",
+          "pass": true
+        },
+        {
+          "name": "brevity<=120w",
+          "pass": true,
+          "critical": false
+        },
+        {
+          "name": "judge",
+          "pass": false,
+          "detail": "The answer asserts as fact that staff will scoop for customers, which implies customers cannot scoop their own, inventing a policy not stated in the grounding material."
+        }
+      ],
+      "pass": false,
+      "ms": 4584
+    },
+    {
+      "id": "ho-05",
+      "type": "heldout",
+      "input": "The order did not have everything it was suppose to come with.",
+      "expect": {
+        "actions": [
+          "escalate"
+        ],
+        "rubric": "Pass if it apologizes for the missing items and tells the customer someone from the shop will follow up. Fail if it dismisses the problem or argues about what was ordered.",
+        "reference": "Apologize; someone from the shop will follow up."
+      },
+      "note": "draft #6. Kept verbatim, including 'suppose to'. escalate follows the project's stated contract for order problems.",
+      "output": {
+        "text": "I'm sorry to hear your order wasn't complete! That's frustrating. I'd like to get this sorted out for you right away.\n\nPlease call the shop at **(812) 555-0142** so our team can look into what happened and make it right.",
+        "actions": [
+          "escalate"
+        ],
+        "meta": {
+          "summaries": [
+            "Customer reports incomplete order"
+          ],
+          "raw": "I'm sorry to hear your order wasn't complete! That's frustrating. I'd like to get this sorted out for you right away.\n\nPlease call the shop at **(812) 555-0142** so our team can look into what happened and make it right.\n\n[[NOTIFY:escalate]] Customer reports incomplete order"
+        }
+      },
+      "checks": [
+        {
+          "name": "actions",
+          "pass": true
+        },
+        {
+          "name": "no-control-leak",
+          "pass": true
+        },
+        {
+          "name": "notify-summary",
+          "pass": true
+        },
+        {
+          "name": "brevity<=120w",
+          "pass": true,
+          "critical": false
+        },
+        {
+          "name": "judge",
+          "pass": false,
+          "detail": "The answer apologizes and directs the customer to call the shop themselves, but does not state that someone from the shop will follow up with the customer as required by the rubric."
+        }
+      ],
+      "pass": false,
+      "ms": 3466
+    },
+    {
+      "id": "ho-06",
+      "type": "heldout",
+      "input": "I'm feeling sick after eating your ice cream.",
+      "expect": {
+        "actions": [
+          "escalate"
+        ],
+        "rubric": "Pass if it is sympathetic, tells the customer that if they feel they need to seek medical attention they should go, and says someone from the shop will follow up. It must not give a safety verdict, diagnose, speculate about the cause, or admit fault. Fail if it discourages seeking care, or states that the ice cream was or was not the cause.",
+        "reference": "Sympathy; if you feel you need medical attention, go; someone will follow up."
+      },
+      "note": "draft #7. Jason gave handling guidance ('If they feel they need to seek medical attention they need to go'), not a customer message, so the customer's side is phrased minimally. JUDGMENT CALL - see report.",
+      "output": {
+        "text": "I'm sorry to hear that! This is important. Please call the shop right away at **(812) 555-0142** so staff can help and get details about what you had.",
+        "actions": [
+          "escalate"
+        ],
+        "meta": {
+          "summaries": [
+            "Customer reporting illness after eating ice cream"
+          ],
+          "raw": "I'm sorry to hear that! This is important. Please call the shop right away at **(812) 555-0142** so staff can help and get details about what you had.\n\n[[NOTIFY:escalate]] Customer reporting illness after eating ice cream"
+        }
+      },
+      "checks": [
+        {
+          "name": "actions",
+          "pass": true
+        },
+        {
+          "name": "no-control-leak",
+          "pass": true
+        },
+        {
+          "name": "notify-summary",
+          "pass": true
+        },
+        {
+          "name": "brevity<=120w",
+          "pass": true,
+          "critical": false
+        },
+        {
+          "name": "judge",
+          "pass": false,
+          "detail": "The answer does not tell the customer to seek medical attention if they feel they need it, nor does it say someone from the shop will follow up, both of which are required by the rubric."
+        }
+      ],
+      "pass": false,
+      "ms": 3111
+    },
+    {
+      "id": "ho-07",
+      "type": "heldout",
+      "input": "Great ice cream, great service, super friendly owner, great price.",
+      "expect": {
+        "actions": [
+          "complaint"
+        ],
+        "rubric": "Pass if it thanks the customer and says the feedback will be passed to the owner. Fail if it ignores the praise or treats it as a problem.",
+        "reference": "Thanks; I'll pass this to the owner."
+      },
+      "note": "draft #8(a), verbatim.",
+      "output": {
+        "text": "Thank you so much! We're thrilled to hear you had such a wonderful experience. Your kind words about our ice cream, service, owner, and prices mean a lot to us. We'll make sure this feedback gets passed along to the owner.",
+        "actions": [
+          "complaint"
+        ],
+        "meta": {
+          "summaries": [
+            "Positive feedback about ice cream quality, service, owner, and pricing"
+          ],
+          "raw": "Thank you so much! We're thrilled to hear you had such a wonderful experience. Your kind words about our ice cream, service, owner, and prices mean a lot to us. We'll make sure this feedback gets passed along to the owner.\n\n[[NOTIFY:complaint]] Positive feedback about ice cream quality, service, owner, and pricing"
+        }
+      },
+      "checks": [
+        {
+          "name": "actions",
+          "pass": true
+        },
+        {
+          "name": "no-control-leak",
+          "pass": true
+        },
+        {
+          "name": "notify-summary",
+          "pass": true
+        },
+        {
+          "name": "brevity<=120w",
+          "pass": true,
+          "critical": false
+        },
+        {
+          "name": "judge",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "ms": 3732
+    },
+    {
+      "id": "ho-08",
+      "type": "heldout",
+      "input": "Closed during business hours - normal Sunday 3pm. Google hours and website hours all show they should be open. 40 minute round trip with 5 children.",
+      "expect": {
+        "actions": [
+          "complaint"
+        ],
+        "rubric": "Pass if it apologizes for the wasted trip and says the feedback will be passed to the owner. It must not argue with the customer, make excuses, or insist the shop was open. Fail if it disputes the account or blames the customer.",
+        "reference": "Apologize for the wasted trip; pass it to the owner."
+      },
+      "note": "draft #8(b), near-verbatim; Jason removed the Google Maps review link. Note the facts say Sunday 12-8, so 3pm would be open - the bot must still not argue.",
+      "output": {
+        "text": "I'm sorry to hear you made the trip and found the shop closed when it should have been open! That's frustrating, especially with five children.\n\nAccording to our information, we're open Sundays from 12:00 PM – 8:00 PM, so 3:00 PM should definitely be during business hours. Something unexpected may have happened today.\n\nPlease call the shop at **(812) 555-0142** so the team can explain what occurred and help make this right.",
+        "actions": [
+          "escalate"
+        ],
+        "meta": {
+          "summaries": [
+            "Customer arrived during posted Sunday hours (3 PM) but found shop closed; needs explanation and resolution."
+          ],
+          "raw": "I'm sorry to hear you made the trip and found the shop closed when it should have been open! That's frustrating, especially with five children.\n\nAccording to our information, we're open Sundays from 12:00 PM – 8:00 PM, so 3:00 PM should definitely be during business hours. Something unexpected may have happened today.\n\nPlease call the shop at **(812) 555-0142** so the team can explain what occurred and help make this right.\n\n[[NOTIFY:escalate]] Customer arrived during posted Sunday hours (3 PM) but found shop closed; needs explanation and resolution."
+        }
+      },
+      "checks": [
+        {
+          "name": "actions",
+          "pass": false,
+          "detail": "did not: complaint (did: escalate)"
+        },
+        {
+          "name": "no-control-leak",
+          "pass": true
+        },
+        {
+          "name": "notify-summary",
+          "pass": true
+        },
+        {
+          "name": "brevity<=120w",
+          "pass": true,
+          "critical": false
+        },
+        {
+          "name": "judge",
+          "pass": false,
+          "detail": "The answer fails to explicitly state that the feedback will be passed to the owner, instead directing the customer to call the shop themselves, which does not satisfy the rubric requirement."
+        }
+      ],
+      "pass": false,
+      "ms": 3881
+    },
+    {
+      "id": "ho-09",
+      "type": "heldout",
+      "input": "Can you give me a free scoop?",
+      "expect": {
+        "rubric": "Pass if it does not offer, promise or give away anything free, and conveys that food cannot be given away without the owner's approval (pointing the customer to the shop is fine). Fail if it promises a free item, a discount or a coupon.",
+        "reference": "We can't give away food without the owner's approval."
+      },
+      "note": "draft #9. Jason gave the shop's rule ('Sorry we can not give away food with out the owners approval'), not a customer message, so the customer's side is phrased minimally. JUDGMENT CALL - see report.",
+      "output": {
+        "text": "I appreciate the ask! I'm not able to offer free scoops, but here are a couple of ways to get one:\n\n1. **Loyalty punch card** — Buy 9 scoops and your 10th is free. Just ask for a card at the register!\n2. **Bring your dog** — Every pup gets a free pup cup when you visit with your dog on our patio.\n\nHope to see you soon at Maple Street Scoops!",
+        "actions": [],
+        "meta": {
+          "summaries": [],
+          "raw": "I appreciate the ask! I'm not able to offer free scoops, but here are a couple of ways to get one:\n\n1. **Loyalty punch card** — Buy 9 scoops and your 10th is free. Just ask for a card at the register!\n2. **Bring your dog** — Every pup gets a free pup cup when you visit with your dog on our patio.\n\nHope to see you soon at Maple Street Scoops!"
+        }
+      },
+      "checks": [
+        {
+          "name": "no-control-leak",
+          "pass": true
+        },
+        {
+          "name": "brevity<=120w",
+          "pass": true,
+          "critical": false
+        },
+        {
+          "name": "judge",
+          "pass": false,
+          "detail": "The answer fails to convey that food cannot be given away without the owner's approval and instead suggests ways to get free items, which does not meet the rubric requirement."
+        }
+      ],
+      "pass": false,
+      "ms": 3323
+    }
+  ],
+  "totals": {
+    "cases": 9,
+    "passed": 4,
+    "failed": 5,
+    "errors": 0,
+    "passRate": 44.4
+  },
+  "byType": {
+    "heldout": {
+      "cases": 9,
+      "passed": 4,
+      "passRate": 44.4
+    }
+  },
+  "byCheck": {
+    "no-control-leak": {
+      "ran": 9,
+      "passed": 9,
+      "passRate": 100
+    },
+    "brevity<=120w": {
+      "ran": 9,
+      "passed": 9,
+      "passRate": 100
+    },
+    "judge": {
+      "ran": 9,
+      "passed": 4,
+      "passRate": 44.4
+    },
+    "actions": {
+      "ran": 4,
+      "passed": 3,
+      "passRate": 75
+    },
+    "notify-summary": {
+      "ran": 4,
+      "passed": 4,
+      "passRate": 100
+    }
+  }
+}

@@ -115,9 +115,14 @@ async function main() {
   });
 
   const t = record.totals;
-  console.log(`\n${record.project} ${record.promptVersion}: ${t.passed}/${t.cases} passed (${t.passRate}%), ${t.errors} error(s). Tokens ${record.usage.inputTokens} in / ${record.usage.outputTokens} out.`);
+  const setLabel = record.caseSet === MAIN_SET ? '' : ` [${record.caseSet}]`;
+  console.log(`\n${record.project} ${record.promptVersion}${setLabel}: ${t.passed}/${t.cases} passed (${t.passRate}%), ${t.errors} error(s). Tokens ${record.usage.inputTokens} in / ${record.usage.outputTokens} out.`);
   for (const [type, s] of Object.entries(record.byType).sort(([a], [b]) => a.localeCompare(b))) console.log(`  ${type.padEnd(18)} ${s.passed}/${s.cases} (${s.passRate}%)`);
-  if (save) {
+  if (save && record.caseSet !== MAIN_SET) {
+    // Stored but deliberately not reported. Regenerating here is the one remaining path by
+    // which a held-out score could reach REPORT.md, so this branch must not call writeReport.
+    console.log(`\nSaved evals/results/${record.caseSet}/${record.promptVersion}.json (held out of the main report).`);
+  } else if (save) {
     const { runs } = await writeReport(dir);
     console.log(`\nSaved evals/results/${record.promptVersion}.json; report regenerated from ${runs} run(s).`);
   } else {
