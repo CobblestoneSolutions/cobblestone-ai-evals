@@ -128,6 +128,8 @@ export interface CaseResult {
 
 export interface RunRecord {
   project: string;
+  /** Which case set produced this run. 'cases' is the main set; anything else is scored apart. */
+  caseSet: string;
   promptVersion: string;
   promptSha256: string;
   model: string;

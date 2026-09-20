@@ -3,13 +3,15 @@ import { execFileSync } from 'node:child_process';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { JUDGE_VERSION } from './checks/judge.ts';
-import { loadCases, loadPrompt } from './load.ts';
+import { MAIN_SET, caseSetName, loadCases, loadPrompt } from './load.ts';
 import type { CaseResult, CheckResult, EvalCase, LLMProvider, Project, RunRecord } from './types.ts';
 
 export interface RunOptions {
   projectDir: string;
   project: Project;
   promptVersion: string;
+  /** Case set to run. Defaults to the main set; a held-out set is named here. */
+  caseSet?: string;
   llm: LLMProvider;
   judge: LLMProvider;
   model: string;
@@ -25,7 +27,8 @@ export interface RunOptions {
 
 export async function runEval(o: RunOptions): Promise<RunRecord> {
   const startedAt = new Date().toISOString();
-  let cases = await loadCases(o.projectDir);
+  const caseSet = caseSetName(o.caseSet ?? MAIN_SET);
+  let cases = await loadCases(o.projectDir, caseSet);
   if (o.only?.length) {
     const want = new Set(o.only);
     cases = cases.filter((c) => want.has(c.id));
@@ -51,6 +54,7 @@ export async function runEval(o: RunOptions): Promise<RunRecord> {
 
   const record = summarize({
     project: o.project.name,
+    caseSet,
     promptVersion: o.promptVersion,
     promptSha256: createHash('sha256').update(prompt).digest('hex'),
     model: o.model,
@@ -65,7 +69,11 @@ export async function runEval(o: RunOptions): Promise<RunRecord> {
   });
 
   if (o.save) {
-    const dir = join(o.projectDir, 'evals', 'results');
+    // Only the main set writes to results/. Every other set gets its own subdirectory, which
+    // the report skips — that is what keeps a held-out score out of the headline number.
+    const dir = caseSet === MAIN_SET
+      ? join(o.projectDir, 'evals', 'results')
+      : join(o.projectDir, 'evals', 'results', caseSet);
     await mkdir(dir, { recursive: true });
     await writeFile(join(dir, `${o.promptVersion}.json`), JSON.stringify(record, null, 2) + '\n');
   }

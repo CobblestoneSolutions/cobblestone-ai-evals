@@ -6,11 +6,19 @@ import type { PromptMeta, RunRecord } from './types.ts';
 /** Natural version order: v1 < v2 < v10. */
 export const byVersion = (a: string, b: string) => a.localeCompare(b, undefined, { numeric: true });
 
+/**
+ * Main-set runs only: the files directly in evals/results/. Subdirectories are skipped, which is
+ * what keeps archived runs and held-out sets (evals/results/<set>/) out of the headline score.
+ * Reading entry types rather than trusting the extension means a *directory* named "x.json"
+ * cannot sneak in either.
+ */
 export async function loadRuns(projectDir: string): Promise<RunRecord[]> {
   const dir = join(projectDir, 'evals', 'results');
   let files: string[] = [];
   try {
-    files = (await readdir(dir)).filter((f) => f.endsWith('.json'));
+    files = (await readdir(dir, { withFileTypes: true }))
+      .filter((e) => e.isFile() && e.name.endsWith('.json'))
+      .map((e) => e.name);
   } catch {
     return [];
   }

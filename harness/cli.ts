@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
+import { MAIN_SET } from './load.ts';
 import { AnthropicProvider } from './providers/anthropic.ts';
 import { CachingProvider } from './providers/cache.ts';
 import { MockProvider } from './providers/mock.ts';
@@ -17,7 +18,7 @@ try {
 }
 
 const USAGE = `Usage:
-  npm run eval   -- <project> --prompt v1 [--provider anthropic|replay|mock] [--case id,id] [--limit n] [--concurrency n] [--fresh]
+  npm run eval   -- <project> --prompt v1 [--cases <set>] [--provider anthropic|replay|mock] [--case id,id] [--limit n] [--concurrency n] [--fresh]
   npm run report -- <project>
 
   <project>  a project folder, e.g. 01-support-assistant
@@ -26,6 +27,9 @@ const USAGE = `Usage:
              replay     re-grade from recorded responses only — no network, no cost
              mock       offline stand-in; results are printed but never saved
   --fresh    ignore recorded responses and call the model again
+  --cases    case set to run (default: cases -> evals/cases.jsonl). Any other name loads
+             evals/<set>.jsonl and saves to evals/results/<set>/, which the report leaves out
+             of the main score — that is how a held-out set stays held out.
   Partial runs (--case / --limit) are printed but never saved, so a subset can't overwrite a full record.`;
 
 /** Only direct child folders named NN-name are valid projects — no path traversal. */
@@ -45,6 +49,7 @@ async function main() {
       prompt: { type: 'string' },
       provider: { type: 'string', default: 'anthropic' },
       case: { type: 'string' },
+      cases: { type: 'string' },
       limit: { type: 'string' },
       concurrency: { type: 'string', default: '4' },
       fresh: { type: 'boolean', default: false },
@@ -94,6 +99,7 @@ async function main() {
     projectDir: dir,
     project,
     promptVersion: values.prompt,
+    caseSet: values.cases,
     llm,
     judge,
     model: values.provider === 'mock' ? 'mock' : model,

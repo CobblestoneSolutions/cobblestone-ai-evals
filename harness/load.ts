@@ -2,11 +2,28 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { EvalCase, PromptMeta } from './types.ts';
 
-/** Parse and validate <project>/evals/cases.jsonl. Fails loudly on bad or duplicate cases. */
-export async function loadCases(projectDir: string): Promise<EvalCase[]> {
-  const file = join(projectDir, 'evals', 'cases.jsonl');
+/** The main set. Any other name is a separate set, scored and stored on its own. */
+export const MAIN_SET = 'cases';
+
+/**
+ * Parse and validate <project>/evals/<set>.jsonl. Fails loudly on bad or duplicate cases.
+ * `set` defaults to the main set; a held-out set is loaded by name and never merged with it.
+ */
+export async function loadCases(projectDir: string, set: string = MAIN_SET): Promise<EvalCase[]> {
+  const file = join(projectDir, 'evals', `${caseSetName(set)}.jsonl`);
   const raw = await readFile(file, 'utf8');
   return parseCases(raw, file);
+}
+
+/**
+ * A set name becomes a path segment, so it must not escape the evals directory or collide with
+ * the run-file layout. Rejecting early beats writing results somewhere surprising.
+ */
+export function caseSetName(set: string): string {
+  if (!/^[a-z0-9][a-z0-9-]*$/i.test(set)) {
+    throw new Error(`invalid case set "${set}": use letters, digits and dashes`);
+  }
+  return set;
 }
 
 export function parseCases(raw: string, file = 'cases.jsonl'): EvalCase[] {

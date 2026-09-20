@@ -83,4 +83,4 @@ None.
 | v1 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | b015741-dirty | 0/0 | 2026-09-20 15:35 |
 | v2 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | b015741-dirty | 0/0 | 2026-09-20 15:35 |
 | v3 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | b015741-dirty | 0/0 | 2026-09-20 15:35 |
-| v4 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | b015741-dirty | 0/0 | 2026-09-20 15:35 |
+| v4 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | 4d595a8-dirty | 0/0 | 2026-09-20 15:39 |

@@ -131,3 +131,53 @@ test('record/replay cache: live call recorded once, replay needs no network, mis
     await rm(dir, { recursive: true, force: true });
   }
 });
+
+test('a held-out set is scored apart and cannot leak into the main report', async () => {
+  const dir = await tmpProject();
+  try {
+    const mock = new MockProvider(example.mock!.bind(example));
+
+    // A held-out set that scores differently from the main set, so a leak would be visible.
+    const main = await readFile(join(dir, 'evals', 'cases.jsonl'), 'utf8');
+    const heldout = main.split(/\r?\n/).filter(Boolean).slice(0, 2)
+      .map((l) => { const c = JSON.parse(l); c.id = `ho-${c.id}`; c.type = 'heldout'; return JSON.stringify(c); })
+      .join('\n');
+    await writeFile(join(dir, 'evals', 'heldout.jsonl'), heldout + '\n');
+
+    const mainRun = await runEval(base(dir, mock, 'v1'));
+    const hoRun = await runEval({ ...base(dir, mock, 'v1'), caseSet: 'heldout' });
+
+    assert.equal(mainRun.caseSet, 'cases');
+    assert.equal(hoRun.caseSet, 'heldout');
+    assert.equal(hoRun.totals.cases, 2, 'held-out run scored only its own cases');
+    assert.deepEqual(hoRun.results.map((x) => x.id), ['ho-ex-01', 'ho-ex-02']);
+
+    // It lands in its own subdirectory, leaving the main record untouched.
+    const saved = JSON.parse(await readFile(join(dir, 'evals', 'results', 'heldout', 'v1.json'), 'utf8'));
+    assert.equal(saved.caseSet, 'heldout');
+    const mainSaved = JSON.parse(await readFile(join(dir, 'evals', 'results', 'v1.json'), 'utf8'));
+    assert.equal(mainSaved.totals.cases, 4, 'main record still holds only main-set cases');
+
+    // The report sees the main run and nothing else.
+    const runs = await loadRuns(dir);
+    assert.equal(runs.length, 1, 'loadRuns ignores the held-out subdirectory');
+    assert.equal(runs[0]!.totals.cases, 4);
+    await writeReport(dir);
+    const md = await readFile(join(dir, 'evals', 'REPORT.md'), 'utf8');
+    assert.doesNotMatch(md, /heldout|ho-ex/, 'no held-out case reaches the report');
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});
+
+test('a case-set name cannot escape the evals directory', async () => {
+  const dir = await tmpProject();
+  try {
+    const mock = new MockProvider(example.mock!.bind(example));
+    for (const bad of ['../secrets', 'a/b', '.', '']) {
+      await assert.rejects(() => runEval({ ...base(dir, mock, 'v1'), caseSet: bad }), /invalid case set/);
+    }
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});
