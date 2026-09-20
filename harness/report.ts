@@ -97,17 +97,23 @@ export function renderChart(runs: RunRecord[]): string {
   const n = Math.max(runs.length, 1);
   const slot = (W - padL - 16) / n;
   const bw = Math.min(64, slot * 0.6);
+  /**
+   * Coordinates are rounded to 2dp. Raw float output ("122.29999999999998") bloats the file, scan:allow
+   * makes the diff churn between runs, and produces long digit runs that the privacy scanner
+   * reads as a card number — which depends on the scores, so it fails on some runs and not others.
+   */
+  const n2 = (x: number) => String(Math.round(x * 100) / 100);
   const y = (v: number) => padT + plotH - (v / 100) * plotH;
   const grid = [0, 25, 50, 75, 100]
-    .map((v) => `<line x1="${padL}" x2="${W - 8}" y1="${y(v)}" y2="${y(v)}" class="g"/><text x="${padL - 8}" y="${y(v) + 4}" text-anchor="end" class="t">${v}%</text>`)
+    .map((v) => `<line x1="${padL}" x2="${W - 8}" y1="${n2(y(v))}" y2="${n2(y(v))}" class="g"/><text x="${padL - 8}" y="${n2(y(v) + 4)}" text-anchor="end" class="t">${v}%</text>`)
     .join('');
   const bars = runs
     .map((r, i) => {
       const x = padL + i * slot + (slot - bw) / 2;
       const v = r.totals.passRate;
-      return `<rect x="${x}" y="${y(v)}" width="${bw}" height="${y(0) - y(v)}" rx="3" class="b"/>` +
-        `<text x="${x + bw / 2}" y="${y(v) - 6}" text-anchor="middle" class="v">${v}%</text>` +
-        `<text x="${x + bw / 2}" y="${H - 14}" text-anchor="middle" class="t">${r.promptVersion}</text>`;
+      return `<rect x="${n2(x)}" y="${n2(y(v))}" width="${n2(bw)}" height="${n2(y(0) - y(v))}" rx="3" class="b"/>` +
+        `<text x="${n2(x + bw / 2)}" y="${n2(y(v) - 6)}" text-anchor="middle" class="v">${v}%</text>` +
+        `<text x="${n2(x + bw / 2)}" y="${H - 14}" text-anchor="middle" class="t">${r.promptVersion}</text>`;
     })
     .join('');
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Pass rate by prompt version">

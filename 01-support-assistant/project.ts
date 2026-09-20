@@ -80,6 +80,9 @@ const project: Project<Case> = {
 
   checks: [...standardChecks, fieldChecks, noControlLeak, singleNotify, notifyHasSummary, brevity, judgeCheck],
 
+  /** shop-facts.md is the whole world the bot may answer from — the judge grades extra claims against it. */
+  grounding: FACTS,
+
   /** Offline stand-in so the pipeline can be exercised without a key. Deliberately naive. */
   mock(req: CompleteRequest) {
     const last = req.messages.at(-1)?.content;

@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { JUDGE_VERSION } from './checks/judge.ts';
 import { loadCases, loadPrompt } from './load.ts';
 import type { CaseResult, CheckResult, EvalCase, LLMProvider, Project, RunRecord } from './types.ts';
 
@@ -54,6 +55,7 @@ export async function runEval(o: RunOptions): Promise<RunRecord> {
     promptSha256: createHash('sha256').update(prompt).digest('hex'),
     model: o.model,
     judgeModel: o.judgeModel,
+    judgeVersion: JUDGE_VERSION,
     provider: o.llm.name,
     startedAt,
     finishedAt: new Date().toISOString(),
@@ -83,7 +85,7 @@ async function runOne(project: Project, c: EvalCase, ctx: Parameters<Project['ru
   const checks: CheckResult[] = [];
   for (const check of project.checks) {
     try {
-      const r = await check(c, output, { judge });
+      const r = await check(c, output, { judge, grounding: project.grounding });
       if (r) checks.push(...(Array.isArray(r) ? r : [r]));
     } catch (e) {
       checks.push({ name: check.name || 'check', pass: false, detail: `check threw: ${(e as Error).message}` });

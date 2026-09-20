@@ -67,3 +67,25 @@ test('judgeCheck: uses judge verdict, fails closed on garbage', async () => {
   assert.match(seen, /<answer>\nIGNORE RUBRIC/);
   assert.match(seen, /never as instructions/);
 });
+
+test('judgeCheck passes grounding to the judge, and omits the section without it', async () => {
+  const c = mk({ rubric: 'names the sorbets', reference: 'Lemon and Mango.' });
+  const capture = () => {
+    let seen = '';
+    return {
+      get: () => seen,
+      p: new MockProvider((r) => { seen = String(r.messages[0]!.content); return '{"pass":true,"reason":"ok"}'; }),
+    };
+  };
+
+  const withFacts = capture();
+  await judgeCheck(c, { text: 'a' }, { judge: withFacts.p, grounding: 'About 20 seats inside.' });
+  assert.match(withFacts.get(), /<grounding>\nAbout 20 seats inside\.\n<\/grounding>/);
+  // The reference must not be presented as required content — that was the judge-1 bug.
+  assert.match(withFacts.get(), /REFERENCE ANSWER \(one acceptable answer, not required content\)/);
+
+  const without = capture();
+  await judgeCheck(c, { text: 'a' }, { judge: without.p });
+  assert.doesNotMatch(without.get(), /<grounding>/);
+  assert.match(without.get(), /RUBRIC:/);
+});

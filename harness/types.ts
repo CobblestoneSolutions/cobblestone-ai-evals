@@ -84,6 +84,12 @@ export interface RunContext {
 export interface CheckContext {
   /** Model client for LLM-graded checks (the judge). */
   judge: LLMProvider;
+  /**
+   * The facts the system under test was given, when the project supplies them. The judge uses
+   * this to tell a grounded detail from a fabricated one instead of grading against the
+   * reference answer alone.
+   */
+  grounding?: string;
 }
 
 /** A project plugs into the harness by default-exporting one of these from <project>/project.ts. */
@@ -95,6 +101,11 @@ export interface Project<C extends EvalCase = EvalCase> {
   checks: Check<C>[];
   /** Optional one-time setup before a run (e.g. build a search index). */
   prepare?(ctx: Omit<RunContext, 'llm'>): Promise<void>;
+  /**
+   * The source of truth the system answers from, passed to LLM-graded checks as `ctx.grounding`.
+   * Omit it for projects where "grounded" isn't a fixed document.
+   */
+  grounding?: string;
   /**
    * Offline stand-in for the model, used with `--provider mock`.
    * Lets the pipeline and checks be tested without an API key or spend.
@@ -121,6 +132,8 @@ export interface RunRecord {
   promptSha256: string;
   model: string;
   judgeModel: string;
+  /** Grader version — see JUDGE_VERSION. Runs graded by different versions are not comparable. */
+  judgeVersion: number;
   provider: string;
   startedAt: string;
   finishedAt: string;
