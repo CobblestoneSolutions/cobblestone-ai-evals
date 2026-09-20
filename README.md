@@ -10,7 +10,7 @@ the failures it was meant to fix. The report checks whether it actually fixed th
 
 | # | Project | What it tests | Status |
 |---|---|---|---|
-| 01 | [Support assistant](01-support-assistant/) | Answers customer questions for a fictional ice cream shop; escalates allergens, complaints and unknowns to a human; resists prompt injection | Planned |
+| 01 | [Support assistant](01-support-assistant/) | Answers customer questions for a fictional ice cream shop; escalates allergens, complaints and unknowns to a human; resists prompt injection | Test set ready (40 cases); v1 not yet run |
 | 02 | [Regulation Q&A](02-regulation-qa/) | Answers Indiana / Vanderburgh County / FDA Food Code questions **only** from the source text, with section citations, and says "not covered" when it isn't | Planned |
 | 03 | [Receipt extraction](03-receipt-extraction/) | Turns receipt images into structured expenses, then checks its own output (line items sum, tax math, plausible date) and flags failures for a human | Planned |
 
