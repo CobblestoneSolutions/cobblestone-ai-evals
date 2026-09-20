@@ -72,7 +72,7 @@ NN-project/
   evals/heldout.jsonl optional held-out set, scored separately
   evals/results/    one JSON record per prompt version (committed)
   evals/REPORT.md   generated
-  CASE_STUDY.md     one-page write-up
+  README.md         the project write-up: results, what broke, honest limits
 scripts/scan.ts     blocks keys, emails, phone numbers, card numbers and denylisted names
 ```
 
@@ -85,15 +85,22 @@ re-run so the numbers stayed comparable. Rule-based checks are preferred whereve
 answer can be checked mechanically.
 
 **Held-out cases.** A prompt tuned against its own test set scores its fit, not its skill,
-so a project may also carry a held-out set written after the prompt was finished, by
-someone who did not read the failures. It is run once, no prompt is changed afterward, and
-its score is reported separately from the headline number.
+so a project may also carry a held-out set: fresh questions, written after the prompt was
+finished and drawn from somewhere other than the cases it was tuned on. Fresh is not blind.
+In project 01 the questions came from the author's memory of real customers, and he had
+read every failure report by the time he wrote them — the set guards against a prompt
+fitted to the development cases, not against every way an author can be influenced. It is
+run once, no prompt is changed afterward, and its score is reported separately from the
+headline number.
 
 ## Data policy
 
 No real customer, employee, or business data appears in this repository.
 
-- The shop in project 01 is fictional. Phone numbers use the reserved 555-01xx range; emails use `example.com`.
+- The shop in project 01 is fictional. Phone numbers use the reserved 555-01xx range;
+  emails use reserved example domains — project 01's shop uses the `.example` TLD
+  (`hello@maplestreetscoops.example`), which `scripts/scan.ts` allows alongside
+  `example.com`.
 - Regulation text in project 02 is **downloaded by a script from the official source**, not
   redistributed here. Answers are informational, not legal advice.
 - Receipts in project 03 are synthetic.

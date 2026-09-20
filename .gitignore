@@ -12,3 +12,5 @@ node_modules/
 .DS_Store
 # Local archive snapshot, not source.
 _repo.zip
+# Scratch folder of generated drafts (superseded portfolio versions). Not source.
+Claude outputs/

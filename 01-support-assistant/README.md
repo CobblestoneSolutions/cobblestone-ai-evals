@@ -17,16 +17,19 @@ prompt was never tuned on.
 | Development set (40 cases) | 67.5% | 95% | 95% | **100%** |
 | Held-out set (9 cases) | — | — | — | **44.4%** |
 
-Model: `claude-haiku-4-5`. Judge: `claude-haiku-4-5`, judge prompt v2. Every number comes
-from a run file in `evals/results/`; the held-out run is `evals/results/heldout/v4.json` and
-is excluded from `REPORT.md` by design.
+Model under test: `claude-haiku-4-5-20251001`. Judge: `claude-sonnet-4-5`, judge prompt v2 —
+a different model from the one being graded. Every number comes from a run file in
+`evals/results/`; the held-out run is `evals/results/heldout/v4.json` and is excluded from
+`REPORT.md` by design.
 
 **The gap is the finding.** Four prompt versions were written by reading failures in the
 same 40 cases, so 100% measures fit to those cases, not general competence. The held-out
-questions were written by the shop's former owner from memory of real customers, after the
-prompt was finished, and were run exactly once with no prompt edits afterward. Three of the
-nine restate topics the development set already covers, and all three pass. On the six
-genuinely new questions, v4 scores **1/6**.
+questions come from this repo's author, who runs a real ice cream shop: he wrote them from
+memory of questions his own customers actually asked, after the prompt was finished. They
+are graded against Maple Street Scoops' fictional facts, not his shop's answers, so where
+the two disagree the fictional facts decide. The set was run exactly once, with no prompt
+edits afterward. Three of the nine restate topics the development set already covers, and
+all three pass. On the six genuinely new questions, v4 scores **1/6**.
 
 What it got wrong is more useful than the score:
 
@@ -43,6 +46,21 @@ What it got wrong is more useful than the score:
 Two of the five held-out failures turn on strict rubric wording. They were left unchanged
 after the results came in: loosening a rubric because it failed is how a held-out set stops
 being one.
+
+**How the draft became cases.** `heldout-draft.txt` is the author's own words, and the
+conversion to `evals/heldout.jsonl` is faithful but not mechanical. Four judgment calls are
+worth knowing before reading the 44.4%:
+
+- Draft items 3, 7 and 9 give *answers* rather than questions, so the customer's side of
+  those cases (ho-03, ho-06, ho-09) was phrased from his words rather than quoted.
+- Where the draft's real-shop answers contradict the fictional shop facts — delivery
+  (item 1) and hours (item 3) — the facts decide the grade, so the bot is marked right for
+  contradicting the author.
+- Where the facts are simply *silent* — sugar-free (item 2) and serving yourself (item 5) —
+  the case is graded as an unknown the bot should hand off, not as the flat "no" the draft
+  gives. That is a grading decision, and a defensible opposite one exists.
+- Item 8 holds a compliment and a complaint, so it became two cases; items 4 and 10 were
+  left blank and omitted. Eight draft items, nine cases.
 
 ## Prompt versions
 
@@ -63,7 +81,7 @@ per case — fixed, still failing, or regressed.
 | `shop-facts.md` | Everything the bot knows. Fictional. Silent on allergens, holidays, WiFi, jobs — on purpose |
 | `prompts/v1.md` … `v4.md` | Prompt versions, each with a change note and claimed fixes |
 | `evals/cases.jsonl` | 40 development cases: lookup 8, menu 8, not-covered 7, escalate 6, complaint 4, adversarial 5, tricky 2 |
-| `evals/heldout.jsonl` | 9 held-out cases, converted verbatim from `heldout-draft.txt` |
+| `evals/heldout.jsonl` | 9 held-out cases, converted faithfully from `heldout-draft.txt`; the conversion's judgment calls are listed under *Results* |
 | `project.ts` | Calls the model, parses the hidden `[[NOTIFY:…]]` hand-off line, defines project checks |
 
 ## How a reply is graded
@@ -80,8 +98,12 @@ auditing failures by hand, fixed, and every version re-run so the numbers stayed
 
 - **The judge called grounded facts hallucinations.** It was shown a short reference answer
   alongside the rubric and treated any correct detail missing from that one-liner as
-  invented. Two cases failed for citing the shop facts accurately. Judge prompt v2 says the
-  reference is one acceptable answer, not the required content.
+  invented. One case, sup-15, failed for citing the shop facts accurately. Judge prompt v2
+  says the reference is one acceptable answer, not the required content; it flipped sup-15
+  and nothing else. The other case under suspicion, sup-22, still fails under v2 and should:
+  asked about hosting a birthday party, the bot replied "we don't have a dedicated party
+  room", a negative the shop facts cannot support. That was a prompt fault, not a judge
+  fault, and v2 of the prompt fixed it.
 - **A tripwire couldn't tell an assertion from a denial.** A substring ban on "is safe for"
   also fired on "I can't tell you whether it is safe for your daughter" — the safest reply
   any version produced. Removed; the judge owns that verdict.
@@ -102,8 +124,10 @@ differently from the development set and asserts none of it reaches `REPORT.md`.
 - The held-out set is 9 cases and was run once. It is a signal about direction, not a
   precise rate.
 - One model, one run per version. No temperature variance or repeat-run spread is measured.
-- No hand-scored agreement rate is published for the judge. Failures were audited case by
-  case; passes were not audited systematically.
+- No hand-scored agreement rate is published for the judge. Every v1 failure was re-read by
+  hand, along with a sample of the passes, and that read found no verdict worth disputing.
+  It was a hand check of a sample, not a measured agreement rate — it comes from no run
+  file, so no number is quoted for it here.
 
 ## Reproduce
 
