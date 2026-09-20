@@ -10,3 +10,5 @@ node_modules/
 02-regulation-qa/docs/raw/
 *.log
 .DS_Store
+# Local archive snapshot, not source.
+_repo.zip
