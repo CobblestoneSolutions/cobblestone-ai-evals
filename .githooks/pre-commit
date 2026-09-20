@@ -1,3 +1,17 @@
 #!/bin/sh
-# Blocks commits that contain keys, private data, or denylisted real names.
+# Two gates, in order of cost.
+# 1. Baton: only the current holder may commit changes to this repo.
+# 2. Scan: blocks keys, private data, and denylisted real names.
+
+staged=$(git diff --cached --name-only)
+
+# A handoff (`baton pass`/`drop`) hands the baton away and *then* commits BATON.md, so the
+# committer is no longer the holder. Commits that touch nothing but BATON.md are bookkeeping
+# and always allowed — they cannot change project files.
+if [ "$staged" = "BATON.md" ]; then
+  echo "pre-commit: baton bookkeeping commit — baton check skipped."
+else
+  npm run --silent baton -- check || { echo "pre-commit: commit blocked — you do not hold the baton."; exit 1; }
+fi
+
 npm run --silent scan || { echo "pre-commit: scan failed — commit blocked."; exit 1; }

@@ -5,10 +5,13 @@
   "description": "Evaluation-driven prompt development for three restaurant AI systems: a support assistant, a regulation Q&A engine, and a self-checking receipt extractor.",
   "type": "module",
   "license": "MIT",
-  "engines": { "node": ">=20.6" },
+  "engines": {
+    "node": ">=20.6"
+  },
   "scripts": {
     "eval": "tsx harness/cli.ts run",
     "report": "tsx harness/cli.ts report",
+    "baton": "tsx scripts/baton.ts",
     "typecheck": "tsc --noEmit",
     "test": "node --import tsx --test harness/tests/*.test.ts",
     "scan": "tsx scripts/scan.ts",
