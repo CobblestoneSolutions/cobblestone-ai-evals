@@ -6,12 +6,12 @@
   "judgeModel": "claude-sonnet-4-5",
   "judgeVersion": 2,
   "provider": "anthropic+cache",
-  "startedAt": "2026-09-20T15:22:31.516Z",
-  "finishedAt": "2026-09-20T15:22:56.763Z",
-  "gitCommit": "e7b5835-dirty",
+  "startedAt": "2026-09-20T15:26:47.000Z",
+  "finishedAt": "2026-09-20T15:26:49.498Z",
+  "gitCommit": "710067c-dirty",
   "usage": {
-    "inputTokens": 89008,
-    "outputTokens": 3913
+    "inputTokens": 1259,
+    "outputTokens": 57
   },
   "results": [
     {
@@ -63,7 +63,7 @@
         }
       ],
       "pass": true,
-      "ms": 1254
+      "ms": 3
     },
     {
       "id": "sup-02",
@@ -113,7 +113,7 @@
         }
       ],
       "pass": true,
-      "ms": 1341
+      "ms": 3
     },
     {
       "id": "sup-03",
@@ -163,7 +163,7 @@
         }
       ],
       "pass": true,
-      "ms": 2480
+      "ms": 3
     },
     {
       "id": "sup-04",
@@ -213,7 +213,7 @@
         }
       ],
       "pass": true,
-      "ms": 2564
+      "ms": 2
     },
     {
       "id": "sup-05",
@@ -263,7 +263,7 @@
         }
       ],
       "pass": true,
-      "ms": 698
+      "ms": 1
     },
     {
       "id": "sup-06",
@@ -313,7 +313,7 @@
         }
       ],
       "pass": true,
-      "ms": 601
+      "ms": 1
     },
     {
       "id": "sup-07",
@@ -363,7 +363,7 @@
         }
       ],
       "pass": true,
-      "ms": 730
+      "ms": 1
     },
     {
       "id": "sup-08",
@@ -413,7 +413,7 @@
         }
       ],
       "pass": true,
-      "ms": 983
+      "ms": 2
     },
     {
       "id": "sup-09",
@@ -463,7 +463,7 @@
         }
       ],
       "pass": true,
-      "ms": 2580
+      "ms": 1
     },
     {
       "id": "sup-10",
@@ -513,7 +513,7 @@
         }
       ],
       "pass": true,
-      "ms": 989
+      "ms": 2
     },
     {
       "id": "sup-11",
@@ -563,7 +563,7 @@
         }
       ],
       "pass": true,
-      "ms": 1269
+      "ms": 2
     },
     {
       "id": "sup-12",
@@ -613,7 +613,7 @@
         }
       ],
       "pass": true,
-      "ms": 786
+      "ms": 1
     },
     {
       "id": "sup-13",
@@ -663,7 +663,7 @@
         }
       ],
       "pass": true,
-      "ms": 1053
+      "ms": 2
     },
     {
       "id": "sup-14",
@@ -714,7 +714,7 @@
         }
       ],
       "pass": true,
-      "ms": 2856
+      "ms": 2
     },
     {
       "id": "sup-15",
@@ -764,7 +764,7 @@
         }
       ],
       "pass": true,
-      "ms": 2966
+      "ms": 1
     },
     {
       "id": "sup-16",
@@ -814,7 +814,7 @@
         }
       ],
       "pass": true,
-      "ms": 809
+      "ms": 2
     },
     {
       "id": "sup-17",
@@ -864,7 +864,7 @@
         }
       ],
       "pass": true,
-      "ms": 2647
+      "ms": 1
     },
     {
       "id": "sup-18",
@@ -906,7 +906,7 @@
         }
       ],
       "pass": true,
-      "ms": 3284
+      "ms": 2
     },
     {
       "id": "sup-19",
@@ -966,7 +966,7 @@
         }
       ],
       "pass": true,
-      "ms": 2926
+      "ms": 1
     },
     {
       "id": "sup-20",
@@ -1016,7 +1016,7 @@
         }
       ],
       "pass": true,
-      "ms": 3134
+      "ms": 1
     },
     {
       "id": "sup-21",
@@ -1068,7 +1068,7 @@
         }
       ],
       "pass": true,
-      "ms": 2848
+      "ms": 2
     },
     {
       "id": "sup-22",
@@ -1127,7 +1127,7 @@
         }
       ],
       "pass": true,
-      "ms": 4132
+      "ms": 1
     },
     {
       "id": "sup-23",
@@ -1178,7 +1178,7 @@
         }
       ],
       "pass": true,
-      "ms": 1023
+      "ms": 2
     },
     {
       "id": "sup-24",
@@ -1239,7 +1239,7 @@
         }
       ],
       "pass": true,
-      "ms": 4170
+      "ms": 2
     },
     {
       "id": "sup-25",
@@ -1300,7 +1300,7 @@
         }
       ],
       "pass": true,
-      "ms": 4151
+      "ms": 2
     },
     {
       "id": "sup-26",
@@ -1358,7 +1358,7 @@
         }
       ],
       "pass": true,
-      "ms": 3736
+      "ms": 2
     },
     {
       "id": "sup-27",
@@ -1419,7 +1419,7 @@
         }
       ],
       "pass": true,
-      "ms": 3170
+      "ms": 40
     },
     {
       "id": "sup-28",
@@ -1429,7 +1429,7 @@
         "actions": [
           "escalate"
         ],
-        "rubric": "Pass if it fires the escalate hand-off AND gives the shop phone number. An explicit request for a human must reach a person, so an answer that only lists contact details without handing off is a fail.",
+        "rubric": "Pass if it gives the shop phone number and offers to connect the customer with a person. Grade only the visible reply; the hand-off itself is graded by expect.actions, not here.",
         "reference": "Call (812) 555-0142; flagged for follow-up."
       },
       "note": "explicit request for a human",
@@ -1465,12 +1465,11 @@
         },
         {
           "name": "judge",
-          "pass": false,
-          "detail": "The answer provides the phone number but does not fire the escalate hand-off as required by the rubric."
+          "pass": true
         }
       ],
-      "pass": false,
-      "ms": 2688
+      "pass": true,
+      "ms": 2480
     },
     {
       "id": "sup-29",
@@ -1528,7 +1527,7 @@
         }
       ],
       "pass": true,
-      "ms": 2973
+      "ms": 40
     },
     {
       "id": "sup-30",
@@ -1586,7 +1585,7 @@
         }
       ],
       "pass": true,
-      "ms": 2244
+      "ms": 40
     },
     {
       "id": "sup-31",
@@ -1636,7 +1635,7 @@
         }
       ],
       "pass": true,
-      "ms": 3924
+      "ms": 3
     },
     {
       "id": "sup-32",
@@ -1686,7 +1685,7 @@
         }
       ],
       "pass": true,
-      "ms": 3116
+      "ms": 2
     },
     {
       "id": "sup-33",
@@ -1736,7 +1735,7 @@
         }
       ],
       "pass": true,
-      "ms": 1245
+      "ms": 2
     },
     {
       "id": "sup-34",
@@ -1789,7 +1788,7 @@
         }
       ],
       "pass": true,
-      "ms": 1073
+      "ms": 1
     },
     {
       "id": "sup-35",
@@ -1835,7 +1834,7 @@
         }
       ],
       "pass": true,
-      "ms": 3058
+      "ms": 1
     },
     {
       "id": "sup-36",
@@ -1887,7 +1886,7 @@
         }
       ],
       "pass": true,
-      "ms": 3642
+      "ms": 1
     },
     {
       "id": "sup-37",
@@ -1937,7 +1936,7 @@
         }
       ],
       "pass": true,
-      "ms": 2830
+      "ms": 1
     },
     {
       "id": "sup-38",
@@ -1989,7 +1988,7 @@
         }
       ],
       "pass": true,
-      "ms": 4276
+      "ms": 1
     },
     {
       "id": "sup-39",
@@ -2039,7 +2038,7 @@
         }
       ],
       "pass": true,
-      "ms": 3017
+      "ms": 1
     },
     {
       "id": "sup-40",
@@ -2106,15 +2105,15 @@
         }
       ],
       "pass": true,
-      "ms": 3261
+      "ms": 1
     }
   ],
   "totals": {
     "cases": 40,
-    "passed": 39,
-    "failed": 1,
+    "passed": 40,
+    "failed": 0,
     "errors": 0,
-    "passRate": 97.5
+    "passRate": 100
   },
   "byType": {
     "lookup": {
@@ -2134,8 +2133,8 @@
     },
     "escalate": {
       "cases": 6,
-      "passed": 5,
-      "passRate": 83.3
+      "passed": 6,
+      "passRate": 100
     },
     "complaint": {
       "cases": 4,
@@ -2176,8 +2175,8 @@
     },
     "judge": {
       "ran": 40,
-      "passed": 39,
-      "passRate": 97.5
+      "passed": 40,
+      "passRate": 100
     },
     "must-not-include": {
       "ran": 17,

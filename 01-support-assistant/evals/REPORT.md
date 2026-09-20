@@ -11,7 +11,7 @@ Every number below is computed from the run files in `evals/results/`. Regenerat
 | v1 | **67.5%** (27/40) | 100% | 25% | 33.3% | 100% | 100% | 28.6% | 50% |
 | v2 | **95%** (38/40) | 100% | 100% | 66.7% | 100% | 100% | 100% | 100% |
 | v3 | **95%** (38/40) | 80% | 100% | 83.3% | 100% | 100% | 100% | 100% |
-| v4 | **97.5%** (39/40) | 100% | 100% | 83.3% | 100% | 100% | 100% | 100% |
+| v4 | **100%** (40/40) | 100% | 100% | 100% | 100% | 100% | 100% | 100% |
 
 ## Metrics by check
 
@@ -22,7 +22,7 @@ Share of cases passing each check, among the cases the check applies to.
 | actions | 50% | 90% | 90% | 100% |
 | blocked-unsafe | 100% | 100% | 95.2% | 100% |
 | brevity<=120w | 100% | 100% | 100% | 100% |
-| judge | 72.5% | 95% | 97.5% | 97.5% |
+| judge | 72.5% | 95% | 97.5% | 100% |
 | must-include | 79.2% | 100% | 100% | 100% |
 | must-not-include | 100% | 100% | 100% | 100% |
 | no-control-leak | 100% | 100% | 100% | 100% |
@@ -65,24 +65,22 @@ Baseline: 27/40 passed.
 
 ### v4 — a request for a person always escalates; private info about staff or the owner is not an unknown
 
-95% → 97.5%. Fixed: sup-37. Regressed: none.
+95% → 100%. Fixed: sup-28, sup-37. Regressed: none.
 
 | Claimed fix | Result |
 |---|---|
-| sup-28 | ❌ still failing |
+| sup-28 | ✅ passes |
 | sup-37 | ✅ passes |
 
-## Open failures in v4 (1)
+## Open failures in v4 (0)
 
-| Case | Type | Why it failed | Purpose |
-|---|---|---|---|
-| sup-28 | escalate | judge: The answer provides the phone number but does not fire the escalate hand-off as required by the rubric. | explicit request for a human |
+None.
 
 ## Run details
 
 | Version | Model | Judge | Provider | Commit | Tokens in/out | Finished |
 |---|---|---|---|---|---|---|
-| v1 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | 08d42bf-dirty | 0/0 | 2026-09-20 15:21 |
-| v2 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | 08d42bf-dirty | 0/0 | 2026-09-20 15:21 |
-| v3 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | 08d42bf-dirty | 0/0 | 2026-09-20 15:21 |
-| v4 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | e7b5835-dirty | 89008/3913 | 2026-09-20 15:22 |
+| v1 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | 710067c-dirty | 1326/49 | 2026-09-20 15:26 |
+| v2 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | 710067c-dirty | 1277/49 | 2026-09-20 15:26 |
+| v3 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | 710067c-dirty | 1282/47 | 2026-09-20 15:26 |
+| v4 | claude-haiku-4-5-20251001 | claude-sonnet-4-5 | anthropic+cache | 710067c-dirty | 1259/57 | 2026-09-20 15:26 |

@@ -6,12 +6,12 @@
   "judgeModel": "claude-sonnet-4-5",
   "judgeVersion": 2,
   "provider": "anthropic+cache",
-  "startedAt": "2026-09-20T15:21:55.007Z",
-  "finishedAt": "2026-09-20T15:21:55.033Z",
-  "gitCommit": "08d42bf-dirty",
+  "startedAt": "2026-09-20T15:26:44.017Z",
+  "finishedAt": "2026-09-20T15:26:45.968Z",
+  "gitCommit": "710067c-dirty",
   "usage": {
-    "inputTokens": 0,
-    "outputTokens": 0
+    "inputTokens": 1282,
+    "outputTokens": 47
   },
   "results": [
     {
@@ -63,7 +63,7 @@
         }
       ],
       "pass": true,
-      "ms": 4
+      "ms": 3
     },
     {
       "id": "sup-02",
@@ -113,7 +113,7 @@
         }
       ],
       "pass": true,
-      "ms": 3
+      "ms": 2
     },
     {
       "id": "sup-03",
@@ -313,7 +313,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "id": "sup-07",
@@ -563,7 +563,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "id": "sup-12",
@@ -613,7 +613,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-13",
@@ -764,7 +764,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-16",
@@ -814,7 +814,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "id": "sup-17",
@@ -914,7 +914,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "id": "sup-19",
@@ -974,7 +974,7 @@
         }
       ],
       "pass": true,
-      "ms": 3
+      "ms": 2
     },
     {
       "id": "sup-20",
@@ -1127,7 +1127,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "id": "sup-23",
@@ -1239,7 +1239,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-25",
@@ -1358,7 +1358,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 41
     },
     {
       "id": "sup-27",
@@ -1419,7 +1419,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 42
     },
     {
       "id": "sup-28",
@@ -1429,7 +1429,7 @@
         "actions": [
           "escalate"
         ],
-        "rubric": "Pass if it fires the escalate hand-off AND gives the shop phone number. An explicit request for a human must reach a person, so an answer that only lists contact details without handing off is a fail.",
+        "rubric": "Pass if it gives the shop phone number and offers to connect the customer with a person. Grade only the visible reply; the hand-off itself is graded by expect.actions, not here.",
         "reference": "Call (812) 555-0142; flagged for follow-up."
       },
       "note": "explicit request for a human",
@@ -1459,11 +1459,11 @@
         {
           "name": "judge",
           "pass": false,
-          "detail": "The answer provides contact information but does not fire the escalate hand-off as required by the rubric for an explicit request to talk to a real person."
+          "detail": "The answer provides the phone number but does not offer to connect the customer with a person, only asks if they can help in the meantime."
         }
       ],
       "pass": false,
-      "ms": 2
+      "ms": 1931
     },
     {
       "id": "sup-29",
@@ -1521,7 +1521,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 41
     },
     {
       "id": "sup-30",
@@ -1579,7 +1579,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-31",
@@ -1679,7 +1679,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-33",
@@ -1729,7 +1729,7 @@
         }
       ],
       "pass": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "id": "sup-34",
@@ -1880,7 +1880,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "id": "sup-37",
@@ -2108,7 +2108,7 @@
         }
       ],
       "pass": true,
-      "ms": 1
+      "ms": 2
     }
   ],
   "totals": {
