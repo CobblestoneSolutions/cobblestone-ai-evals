@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cobblestone CRM agent fleet — Jason Dicken</title>
+<meta name="description" content="A production CRM with an orchestrator agent over 18 specialists, where nothing customer-facing sends without human approval.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="style.css">
+<style>:root{color-scheme:light dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="top">
+    <a class="who" href="./">Jason Dicken</a>
+    <nav aria-label="Sections">
+      <a href="./#work">Work</a>
+      <a href="./#approach">Approach</a>
+      <a href="./#about">About</a>
+      <a href="resume.pdf">Résumé</a>
+      <a href="./#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="hero" id="main">
+    <p class="role">Case study · production agent system</p>
+    <h1>An agent fleet that can't send anything without me</h1>
+    <p class="lede">The work that closes deals — research, qualification, proposals, follow-up timing — was all manual. The CRM I built and now run my business on has an orchestrator agent over 18 specialists that do that work and queue it. Exactly one module is allowed to send, and only after a human approves the row.</p>
+  </div>
+
+  <section id="shape">
+    <div class="part">
+      <h2>What it is</h2>
+      <div class="scroll">
+        <table>
+          <tbody>
+            <tr><th>Stack</th><td>Python, FastAPI, SQLAlchemy, APScheduler, Anthropic API, Twilio, Google Workspace APIs, Deepgram, JWT auth, pytest, Ubuntu VPS behind nginx</td></tr>
+            <tr><th>Size</th><td>51 database tables, 315 API endpoints across 30+ routers, 20+ recurring jobs, an Android companion app</td></tr>
+            <tr><th>Models</th><td>Opus orchestrates; Sonnet and Haiku do the bounded specialist work</td></tr>
+            <tr><th>Status</th><td>In daily production use, running my own business. Built in about seven weeks.</td></tr>
+            <tr><th>Evaluated?</th><td>Not yet. No test set exists for the fleet, so no accuracy claim is made anywhere on this site.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="flow">
+    <div class="intro">
+      <p class="kicker">The shape of it</p>
+      <h2>How a request moves through</h2>
+    </div>
+    <div class="part">
+      <ol class="flow">
+        <li><h4>A request comes in</h4><p>From the dashboard chat, from a Telegram bot, or from one of 20+ scheduled jobs. Eight agents run daily and produce automated briefings.</p></li>
+        <li><h4>The orchestrator routes it</h4><p>It holds every tool — about 25: pipeline reads and writes, contact CRUD, activity logging, Gmail read and draft, calendar create and reschedule, and agent dispatch.</p></li>
+        <li><h4>A specialist does the work</h4><p>18 of them: lead qualification, follow-up scheduling, proposals, pipeline analytics, lead scraping, customer health, competitor and product research, sales coaching, onboarding, support, pricing, compliance review, data hygiene, marketing calendar, social content, task automation.</p></li>
+        <li class="gate"><h4>A human approves the send</h4><p>Drafts queue as a PendingAction row, reviewed in the dashboard or over Telegram. One module is permitted to send email or SMS. The rule is enforced in code, not by convention.</p></li>
+      </ol>
+      <p class="text">Specialists have no database access of their own and reach data only through the orchestrator. That keeps credentials and write access in one place and makes every agent run reviewable. The approval gate covers customer-facing email, text and proposals; internal actions such as logging activity, scoring a lead or scheduling a task are not gated.</p>
+    </div>
+  </section>
+
+  <section id="decisions">
+    <div class="intro">
+      <p class="kicker">Decisions</p>
+      <h2>Four worth explaining</h2>
+    </div>
+    <div class="three">
+      <article>
+        <h3>Two ways to call an agent</h3>
+        <p><code>run_agent_skill</code> invokes a specialist for one schema-validated output: score this lead, write this proposal. <code>ask_agent</code> opens a persistent thread when the task needs judgment — the specialist replies with a <code>needs</code> list, the orchestrator fetches that data with its own tools, and the conversation continues. One is a function call; the other is a colleague who can ask a question back.</p>
+      </article>
+      <article>
+        <h3>Knowing what it costs</h3>
+        <p>Per-agent model tiering, cost attribution per run, a daily token budget that short-circuits the fleet, a research cache, exponential-backoff retries, and every run logged to an <code>agent_runs</code> table. Cost is blended on a 3:1 input/output ratio, because averaging the two rates evenly overstates it by roughly 2x.</p>
+      </article>
+      <article>
+        <h3>Vision extraction that replaced a paid service</h3>
+        <p>Merchant processing statements are read straight from PDF by a vision model, with no per-processor parsers. Every figure is either printed on the statement or derived from one by arithmetic. A regex classifier runs independently, and disagreements go to a human instead of being auto-resolved.</p>
+      </article>
+      <article>
+        <h3>Post-call intelligence</h3>
+        <p>A Twilio recording becomes a speaker-separated Deepgram transcript, then a structured review — outcome, sentiment, objections, next steps, coaching tip — written back to the lead's timeline.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="ownership">
+    <div class="intro">
+      <p class="kicker">Ownership</p>
+      <h2>What I did and what the coding agents did</h2>
+    </div>
+    <div class="text">
+      <p>Claude Code wrote most of the implementation. I wrote the specifications, the agent prompts and the decision log; chose the architecture, including the single-sender rule and the orchestrator-only data access; reviewed the diffs; ran the tests; and deployed and operate it. When something is wrong in production, it is mine to fix.</p>
+      <p>I am not claiming to have hand-written 315 endpoints, and I would not describe myself as a software engineer. What I'd claim is this: I can specify a system precisely enough that agents build the right thing, catch it when they don't, and run the result as a business depends on it.</p>
+      <p>The honest gap is measurement. This fleet has no evals. The next evaluation project is lead scoring and statement extraction, where being wrong costs money and the right answer is checkable — the same harness as the <a href="support-assistant.html">support assistant</a>.</p>
+    </div>
+  </section>
+
+  <p class="backlink"><a href="./">← Back to the homepage</a></p>
+</div>
+</body>
+</html>
