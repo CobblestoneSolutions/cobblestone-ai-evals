@@ -72,7 +72,9 @@ npm install && npm run setup-hooks
 
 - **Never commit real data.** `npm run scan` blocks keys, emails, phone numbers, card numbers
   and any name in `.scan-denylist` (gitignored — it holds the real names, so it must never be
-  pushed). Mark a deliberate match with `scan:allow` on the line.
+  pushed). Mark a deliberate match by ending that line with `scan:allow` — the marker only
+  counts when it trails the line (bare, or as `// scan:allow`, `# scan:allow`,
+  `<!-- scan:allow -->`). Naming the token mid-sentence no longer exempts anything.
 - **Stage explicit paths, never `git add -A`.** Several agents and one human share this
   working tree, so anything untracked may not be yours. `git add -A` once swept a file this
   session had never read into an unrelated commit.

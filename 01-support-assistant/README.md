@@ -24,8 +24,8 @@ a different model from the one being graded. Every number comes from a run file 
 
 **The gap is the finding.** Four prompt versions were written by reading failures in the
 same 40 cases, so 100% measures fit to those cases, not general competence. The held-out
-questions come from this repo's author, who runs a real ice cream shop: he wrote them from
-memory of questions his own customers actually asked, after the prompt was finished. They
+questions come from this repo's author, who ran an ice cream shop of his own: he wrote them
+from memory of questions real customers actually asked there, after the prompt was finished. They
 are graded against Maple Street Scoops' fictional facts, not his shop's answers, so where
 the two disagree the fictional facts decide. The set was run exactly once, with no prompt
 edits afterward. Three of the nine restate topics the development set already covers, and

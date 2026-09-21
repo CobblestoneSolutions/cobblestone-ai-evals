@@ -71,6 +71,7 @@ NN-project/
   evals/cases.jsonl the test set
   evals/heldout.jsonl optional held-out set, scored separately
   evals/results/    one JSON record per prompt version (committed)
+  evals/results/archive/  superseded runs, kept as evidence and never scored — see its README
   evals/REPORT.md   generated
   README.md         the project write-up: results, what broke, honest limits
 scripts/scan.ts     blocks keys, emails, phone numbers, card numbers and denylisted names
@@ -83,6 +84,11 @@ before any prompt change, and what that audit finds is published in the project 
 project 01 documents three grading faults it turned up, each fixed with every version
 re-run so the numbers stayed comparable. Rule-based checks are preferred wherever the
 answer can be checked mechanically.
+
+When a grader changes, the runs it produced are moved to `evals/results/archive/` rather than
+deleted: a score only means something beside the grader that produced it. Archived runs are
+excluded from the report and must not be quoted as scores. Project 01 has one, and its folder
+README says what it was and why it was superseded.
 
 **Held-out cases.** A prompt tuned against its own test set scores its fit, not its skill,
 so a project may also carry a held-out set: fresh questions, written after the prompt was

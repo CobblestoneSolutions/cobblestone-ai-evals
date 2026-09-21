@@ -6,7 +6,9 @@
  * appear in this public repo — one per line in `.scan-denylist` (gitignored, so the list itself
  * never gets published). Lines starting with # are comments.
  *
- * To allow a deliberate match (e.g. a fake number in a test), put `scan:allow` on that line.
+ * To allow a deliberate match (e.g. a fake number in a test), END that line with `scan:allow`,
+ * bare or inside a trailing comment. The marker must TRAIL the line: a line that merely mentions
+ * the token mid-sentence is still scanned, so prose about the mechanism cannot exempt itself.
  */
 import { execFileSync } from 'node:child_process';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
@@ -70,11 +72,22 @@ export function loadDenylist(root = ROOT): string[] {
   }
 }
 
+/**
+ * A line is exempt only when `scan:allow` TRAILS it — bare, or as the last thing inside a
+ * trailing comment: `// scan:allow`, `# scan:allow`, `<!-- scan:allow -->`, `/* scan:allow *\/`.
+ *
+ * Deliberately narrow. The old rule was `line.includes('scan:allow')`, which exempted any line
+ * that so much as named the token: a handoff note describing the mechanism silenced its own
+ * line and hid ten findings behind a scan that printed "clean".
+ */
+export const ALLOW_MARKER =
+  /(?:^|\s)(?:(?:\/\/|#)\s*)?scan:allow\s*$|(?:^|\s)(?:<!--\s*scan:allow\s*-->|\/\*\s*scan:allow\s*\*\/)\s*$/;
+
 export function scanText(text: string, file: string, deny: string[]): Finding[] {
   const out: Finding[] = [];
   const lowerDeny = deny.map((d) => d.toLowerCase());
   text.split(/\r?\n/).forEach((line, i) => {
-    if (line.includes('scan:allow')) return;
+    if (ALLOW_MARKER.test(line)) return;
     for (const { rule, re, allow } of RULES) {
       for (const m of line.matchAll(re)) {
         if (allow?.(m[0])) continue;

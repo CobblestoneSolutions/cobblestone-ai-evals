@@ -38,5 +38,22 @@ test('denylist is case-insensitive and does not echo the term', () => {
 test('secrets are redacted in findings; scan:allow skips a line', () => {
   const f = scanText('sk-ant-api03-SECRETSECRETSECRETSECRET', 'f', []); // scan:allow
   assert.doesNotMatch(f[0]!.match, /SECRETSECRETSECRET/);
-  assert.deepEqual(rules('812-422-1234 scan:allow'), []);
+  assert.deepEqual(rules('812-422-1234 scan:allow'), []); // scan:allow
+});
+
+test('scan:allow exempts a line only as a TRAILING marker', () => {
+  // Trailing, bare or inside a closing comment: the line is skipped.
+  assert.deepEqual(rules('812-422-1234 scan:allow'), []); // scan:allow
+  assert.deepEqual(rules('812-422-1234 // scan:allow'), []); // scan:allow
+  assert.deepEqual(rules('812-422-1234 # scan:allow'), []); // scan:allow
+  assert.deepEqual(rules('812-422-1234 <!-- scan:allow -->'), []); // scan:allow
+
+  // Merely NAMING the token mid-sentence must not exempt anything. This is the hole that
+  // let a handoff note hide ten findings behind a scan that printed "clean".
+  assert.deepEqual(rules('the scan:allow marker exempts 812-422-1234 when it trails'), ['phone']); // scan:allow
+  assert.deepEqual(rules('FOUR scan:allow lines, not two: 812-422-1234'), ['phone']); // scan:allow
+
+  // The same gate governs denylist terms, not just the regex rules.
+  assert.deepEqual(scanText('Welcome to REAL SHOP scan:allow', 'f', ['real shop']), []); // scan:allow
+  assert.equal(scanText('a scan:allow line naming REAL SHOP mid-sentence', 'f', ['real shop']).length, 1); // scan:allow
 });
