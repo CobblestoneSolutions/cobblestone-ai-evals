@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Cobblestone CRM agent fleet — Jason Dicken</title>
-<meta name="description" content="A production CRM whose orchestrator agent, Oreo, runs 18 specialists — and where nothing customer-facing sends without human approval.">
+<title>A sales CRM with human-approved customer messaging — Jason Dicken</title>
+<meta name="description" content="A production sales CRM: an orchestrator agent, Oreo, runs 18 specialists, and every customer-facing message waits for human approval.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -27,7 +27,7 @@ figure.diagram svg{max-width:460px;margin-inline:auto}</style>
 
   <div class="hero" id="main">
     <p class="role">Case study · production agent system</p>
-    <h1>An agent fleet that cannot send anything without me</h1>
+    <h1>A sales CRM with human-approved customer messaging</h1>
     <p class="lede">The work that closes deals — research, qualification, proposals, follow-up timing — was all manual. The CRM I specified and now run my business on has an orchestrator agent — Oreo — over 18 specialists that do that work and queue it. Exactly one module is allowed to send, and only after a human approves the row.</p>
   </div>
 
@@ -35,16 +35,17 @@ figure.diagram svg{max-width:460px;margin-inline:auto}</style>
     <h2 id="summary-h" class="kicker">In short</h2>
     <dl class="summary">
       <div><dt>Problem</dt><dd>Pipeline research, qualification, proposals and follow-up timing were manual. An agent allowed to email a customer unsupervised is a liability, not a feature.</dd></div>
-      <div><dt>My contribution</dt><dd>I own the requirements, the architecture, Oreo's prompt and the 18 specialist prompts, the review, the deployment and the daily operation. AI coding tools wrote most of the implementation. When it is wrong in production, it is mine to fix.</dd></div>
+      <div><dt>My contribution</dt><dd>I own the requirements, the architecture, Oreo's prompt and the 18 specialist prompts, the review, the deployment and the daily operation. When it is wrong in production, it is mine to fix — <a href="#ownership">what the coding agents did</a>.</dd></div>
       <div><dt>Evidence</dt><dd>The approval path below is drawn from the running system. The repository is private, so there is no code link — a walkthrough on request.</dd></div>
-      <div><dt>Status</dt><dd>Daily production use; formal evaluation pending. No test set exists for this fleet, so no accuracy claim is made for it anywhere on this site.</dd></div>
+      <div><dt>Status</dt><dd>Daily production use; no test set exists for this fleet, so no accuracy claim is made for it.</dd></div>
     </dl>
   </section>
 
   <section id="shape" aria-labelledby="shape-h">
     <div class="part">
       <h2 id="shape-h">What it is</h2>
-      <div class="scroll">
+      <p class="scroll-note">Scroll for the full table</p>
+      <div class="scroll" role="region" tabindex="0" aria-label="What the CRM is">
         <table>
           <tbody>
             <tr><th scope="row">Stack</th><td>Python, FastAPI, SQLAlchemy, APScheduler, Anthropic API, Twilio, Google Workspace APIs, Deepgram, JWT auth, pytest, Ubuntu VPS behind nginx</td></tr>
@@ -52,7 +53,7 @@ figure.diagram svg{max-width:460px;margin-inline:auto}</style>
             <tr><th scope="row">Agents</th><td>19 agent classes: <b>Oreo</b>, the orchestrator, plus 18 specialists. Specialists never touch the database; everything routes through Oreo.</td></tr>
             <tr><th scope="row">Models</th><td>Opus orchestrates; Sonnet and Haiku do the bounded specialist work</td></tr>
             <tr><th scope="row">Status</th><td>In daily production use, running my own business. Built in about seven weeks.</td></tr>
-            <tr><th scope="row">Evaluated?</th><td>Not yet. No test set exists for the fleet, so no accuracy claim is made anywhere on this site.</td></tr>
+            <tr><th scope="row">Evaluated?</th><td>Not yet — no test set exists for the fleet.</td></tr>
           </tbody>
         </table>
       </div>
@@ -111,7 +112,7 @@ figure.diagram svg{max-width:460px;margin-inline:auto}</style>
           <text class="d-t" x="56" y="522">One module sends it</text>
           <text class="d-s" x="56" y="543">enforced in code, not by convention</text>
         </svg>
-        <figcaption>The path a customer-facing message takes. This is the architecture as built and as I operate it; it is a description of the design, not evidence that the implementation is secure or tested. The fleet has no test set yet.</figcaption>
+        <figcaption>The path a customer-facing message takes. This is the architecture as built and as I operate it; it is a description of the design, not evidence that the implementation is secure or tested.</figcaption>
       </figure>
 
       <ul class="gatekey">
@@ -156,7 +157,16 @@ figure.diagram svg{max-width:460px;margin-inline:auto}</style>
     <div class="text">
       <p>I own requirements, architecture, agent prompts, review, testing, deployment and operation. AI coding tools — Claude Code, mostly — wrote most of the implementation. The decisions that shaped this system are mine: Oreo-only data access, one sending module, the approval gate, the model tiering, and the rule that a disagreement between the vision extractor and the regex classifier goes to a person rather than being auto-resolved.</p>
       <p>I am not claiming to have hand-written 315 endpoints. What I claim is that I can specify a system precisely enough that agents build the right thing, catch it when they don't, and run the result as a business depends on it — because one does.</p>
-      <p>The honest gap is measurement. This fleet has no evals. The next evaluation project is lead scoring and statement extraction, where being wrong costs money and the right answer is checkable — the same harness as the <a href="support-assistant.html">support assistant</a>.</p>
+      <p>The honest gap is measurement. The next evaluation project is lead scoring and statement extraction, where being wrong costs money and the right answer is checkable — the same harness as the <a href="support-assistant.html">support assistant</a>.</p>
+    </div>
+  </section>
+
+  <section id="contact" aria-labelledby="crm-contact-h">
+    <div class="contact">
+      <p class="kicker">Contact</p>
+      <h2 id="crm-contact-h">Want to see the approval queue running?</h2>
+      <a class="mail" href="mailto:jason@cobblestonepos.com?subject=CRM%20walkthrough%20request">Request a CRM walkthrough</a> <!-- scan:allow -->
+      <p class="small">The repository is private, so a walkthrough is the only way to see the PendingAction queue and the agent runs in the real system.</p>
     </div>
   </section>
 

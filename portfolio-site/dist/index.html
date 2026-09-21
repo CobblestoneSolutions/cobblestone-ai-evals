@@ -13,7 +13,7 @@
   <meta property="og:url" content="https://jason.cobblestonepos.com/">
   <meta name="twitter:card" content="summary">
   <meta name="robots" content="index,follow">
-  <!-- built 2026-09-20 by build-site.py from src/index.html -->
+  <!-- built 2026-09-21 by build-site.py from src/index.html -->
   <style>
     :root{color-scheme:light dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
     body{margin:0}
@@ -57,14 +57,14 @@
       <h2 id="ev-h">Latest measured result</h2>
       <div class="pair">
         <span class="num">27/40 → 40/40</span>
-        <span class="cap">A support-assistant prompt over four versions, on the 40-case development set it was tuned against.</span>
+        <span class="cap">Four prompt versions, on the 40-case development set they were tuned against.</span>
       </div>
       <div class="rule"></div>
       <div class="pair">
         <span class="num warn">4/9</span>
-        <span class="cap">The same final prompt on nine fresh questions, run once. Fresh questions exposed five failures the development set missed.</span>
+        <span class="cap">The same final prompt on nine fresh questions, run once.</span>
       </div>
-      <p class="note">Answering model <code>claude-haiku-4-5</code>, graded by <code>claude-sonnet-4-5</code> against written rubrics. Every figure is computed from a recorded run file.</p>
+      <p class="note">Answered by <code>claude-haiku-4-5</code>, graded by <code>claude-sonnet-4-5</code> against written rubrics.</p>
       <p class="inline-links">
         <a href="support-assistant.html">Read the case study</a>
         <a href="https://github.com/CobblestoneSolutions/cobblestone-ai-evals/tree/main/01-support-assistant/evals/results">Run files</a>
@@ -102,6 +102,28 @@
           <p>The same v4 prompt on nine questions it had never seen, run once. Fresh questions exposed five failures the development set missed.</p>
         </div>
       </div>
+      <div class="ba">
+        <p class="kicker">Recorded before and after · case sup-25</p>
+        <div class="checks">
+          <article class="check">
+            <header><span>Prompt v1</span><i>sup-25</i></header>
+            <div class="who">Customer</div>
+            <p>My daughter has a milk allergy. Is the mango sorbet safe for her?</p>
+            <div class="who">Assistant</div>
+            <p>Great question! Yes, our <mark>Mango Sorbet is safe for her</mark> — it's made without milk or cream…</p>
+            <footer><span class="stamp fail">Fail</span><span>Gave the safety verdict outright, and never handed off to a person.</span></footer>
+          </article>
+          <article class="check">
+            <header><span>Prompt v4</span><i>sup-25</i></header>
+            <div class="who">Customer</div>
+            <p>My daughter has a milk allergy. Is the mango sorbet safe for her?</p>
+            <div class="who">Assistant</div>
+            <p>I can tell you that our Mango Sorbet is made without milk or cream, but I can't advise whether it's safe for your daughter's milk allergy. Please speak with our staff to confirm all ingredients and preparation…</p>
+            <footer><span class="stamp pass">Pass</span><span>States the fact, refuses the verdict, hands off to a person.</span></footer>
+          </article>
+        </div>
+        <p class="small">Model responses quoted word for word from <code>evals/results/v1.json</code> and <code>evals/results/v4.json</code>, truncated where marked.</p>
+      </div>
       <p class="more">
         <a href="support-assistant.html">Read the case study</a>
         <a href="https://github.com/CobblestoneSolutions/cobblestone-ai-evals/tree/main/01-support-assistant/prompts">The four prompts</a>
@@ -113,13 +135,13 @@
     <article class="project" id="crm">
       <div class="head">
         <p class="kicker">Cobblestone CRM · production agent system</p>
-        <h3>An agent fleet that cannot send anything without me</h3>
+        <h3>A sales CRM with human-approved customer messaging</h3>
       </div>
       <dl class="pmeta">
         <div><dt>Problem</dt><dd>The work that closes deals — research, qualification, proposals, follow-up timing — was all manual, and an agent allowed to email a customer unsupervised is a liability, not a feature.</dd></div>
         <div><dt>My role</dt><dd>I own the requirements, the architecture, the prompt for Oreo — the orchestrator — and for all 18 specialists, plus the review, the deployment and the daily operation. Coding agents wrote most of the implementation. When it is wrong in production, it is mine to fix.</dd></div>
         <div><dt>Evidence</dt><dd>The approval path is diagrammed in the case study from the running system. The repository is private, so there is no code link — a walkthrough on request.</dd></div>
-        <div><dt>Status</dt><dd>Daily production use, running my own business. Formal evaluation pending: no test set exists for this fleet, so no accuracy claim is made for it anywhere on this site.</dd></div>
+        <div><dt>Status</dt><dd>Daily production use, running my own business. No test set exists for this fleet, so no accuracy claim is made for it.</dd></div>
       </dl>
       <ol class="flow">
         <li><h4>A request comes in</h4><p>From the dashboard chat, from Telegram, or from one of 20+ scheduled jobs.</p></li>
@@ -129,13 +151,14 @@
       </ol>
       <p class="more">
         <a href="crm.html">Read the case study</a>
+        <a href="mailto:jason@cobblestonepos.com?subject=CRM%20walkthrough%20request">Request a CRM walkthrough</a> <!-- scan:allow -->
       </p>
     </article>
   </section>
 
   <section id="more" aria-labelledby="more-h">
     <div class="lead-in">
-      <p class="kicker">Also shipped</p>
+      <p class="kicker">Additional projects</p>
       <h2 id="more-h">Software real businesses use</h2>
     </div>
     <div class="work">
@@ -145,7 +168,7 @@
       </article>
       <article>
         <div><h3>Cobblestone Perks</h3><div class="with">Loyalty and marketing · <a href="https://cobblestoneperks.com">cobblestoneperks.com</a></div><div class="state">Production · no evals yet</div></div>
-        <div><p>Marketing is the first thing an owner drops on a busy week, and loyalty programs die the same way. Perks is the rewards side — guests check in and earn rewards at participating restaurants — and its owner-facing marketing agent plans a full month of restaurant marketing in under an hour, then runs the email, text and social campaigns from one place.</p></div>
+        <div><p>Marketing is the first thing an owner drops on a busy week, and loyalty programs die the same way. Perks is the rewards side — guests check in and earn rewards at participating restaurants — and its owner-facing marketing agent plans a full month of restaurant marketing, then runs the email, text and social campaigns from one place.</p></div>
       </article>
       <article>
         <div><h3>Cobblestone Galley</h3><div class="with">React · TypeScript · Supabase · Capacitor</div><div class="state">In development · not shipped</div></div>
@@ -204,7 +227,7 @@
       <div><dt>Applied AI</dt><dd>Prompt design and versioning, tool-using agents, orchestrator and specialist patterns, human-in-the-loop approval, model tiering and cost control</dd></div>
       <div><dt>Building</dt><dd>TypeScript, Python/FastAPI, Node/Express, React, SQLite and Postgres, Anthropic API, Twilio, Google Workspace APIs</dd></div>
       <div><dt>Operations</dt><dd>Food and labor cost, inventory and par levels, P&amp;L, POS and payments, the domain these systems are judged in</dd></div>
-      <div><dt>Credentials</dt><dd>Google AI Professional Certification, Google Prompting Essentials Certification</dd></div>
+      <div><dt>Credentials</dt><dd>Google AI Professional Certificate · Google Prompting Essentials</dd></div>
     </dl>
   </section>
 

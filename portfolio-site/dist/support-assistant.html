@@ -118,16 +118,16 @@
         <figcaption class="small">Left of the dashed line: the development set, which every prompt version was tuned against. Right, hatched: nine fresh questions, run once against the same v4 prompt. Computed from <code>evals/results/v1–v4.json</code> and <code>evals/results/heldout/v4.json</code>.</figcaption>
       </figure>
 
-      <div class="scroll">
-        <table>
+      <div class="scroll" role="region" tabindex="0" aria-label="Results by prompt version">
+        <table class="fit">
           <caption class="small" style="text-align:left;padding-bottom:10px">The same figures as text.</caption>
-          <thead><tr><th>Prompt version</th><th>Case set</th><th class="n">Passed</th><th class="n">Cases</th><th class="n">Pass rate</th></tr></thead>
+          <thead><tr><th>Version</th><th>Case set</th><th class="n">Passed</th><th class="n">Pass rate</th></tr></thead>
           <tbody>
-            <tr><th scope="row">v1</th><td>development</td><td class="n">27</td><td class="n">40</td><td class="n">67.5%</td></tr>
-            <tr><th scope="row">v2</th><td>development</td><td class="n">38</td><td class="n">40</td><td class="n">95%</td></tr>
-            <tr><th scope="row">v3</th><td>development</td><td class="n">38</td><td class="n">40</td><td class="n">95%</td></tr>
-            <tr><th scope="row">v4</th><td>development</td><td class="n">40</td><td class="n">40</td><td class="n">100%</td></tr>
-            <tr><th scope="row">v4</th><td>fresh questions, run once</td><td class="n">4</td><td class="n">9</td><td class="n">44.4%</td></tr>
+            <tr><th scope="row">v1</th><td>development</td><td class="n">27&#8202;/&#8202;40</td><td class="n">67.5%</td></tr>
+            <tr><th scope="row">v2</th><td>development</td><td class="n">38&#8202;/&#8202;40</td><td class="n">95%</td></tr>
+            <tr><th scope="row">v3</th><td>development</td><td class="n">38&#8202;/&#8202;40</td><td class="n">95%</td></tr>
+            <tr><th scope="row">v4</th><td>development</td><td class="n">40&#8202;/&#8202;40</td><td class="n">100%</td></tr>
+            <tr><th scope="row">v4</th><td>fresh, run once</td><td class="n">4&#8202;/&#8202;9</td><td class="n">44.4%</td></tr>
           </tbody>
         </table>
       </div>
@@ -138,7 +138,8 @@
     <div class="part">
       <h3>What the fresh questions found</h3>
       <p class="text">The four it passed are the four closest to development cases: hours, delivery, a dairy-free and sugar-free question, and a piece of praise. It failed all five that were unlike them.</p>
-      <div class="scroll">
+      <p class="scroll-note">Scroll for the full table</p>
+      <div class="scroll" role="region" tabindex="0" aria-label="What the fresh questions found">
         <table>
           <thead><tr><th>Case</th><th>The customer said</th><th>Result</th><th>Why</th></tr></thead>
           <tbody>
@@ -266,7 +267,8 @@ SHOP INFORMATION
   <section id="bytype" aria-labelledby="bytype-h">
     <div class="part">
       <h2 id="bytype-h">Where v1 failed, by type</h2>
-      <div class="scroll">
+      <p class="scroll-note">Scroll for the full table</p>
+      <div class="scroll" role="region" tabindex="0" aria-label="Where v1 failed, by type">
         <table>
           <thead><tr><th>Type</th><th>What a pass looks like</th><th class="n">Cases</th><th class="n">v1</th><th class="n">v4</th><th class="n">Change</th></tr></thead>
           <tbody>
@@ -299,7 +301,8 @@ SHOP INFORMATION
   <section id="run" aria-labelledby="run-h">
     <div class="part">
       <h2 id="run-h">Run information</h2>
-      <div class="scroll">
+      <p class="scroll-note">Scroll for the full table</p>
+      <div class="scroll" role="region" tabindex="0" aria-label="Run information">
         <table>
           <tbody>
             <tr><th scope="row">Answering model</th><td><code>claude-haiku-4-5-20251001</code>, default settings</td></tr>
@@ -324,6 +327,15 @@ SHOP INFORMATION
     <div class="text">
       <p>One trial per case, so nothing here measures run-to-run variance. Nine fresh questions is a small sample and the 4/9 carries a wide interval. The judge has not been calibrated against human labels beyond the 23 cases I re-read by hand. Latency and cost per answer are recorded but not analyzed. The other systems on this site — the CRM fleet and Daisy — have no evals at all, so nothing on this page says anything about them.</p>
       <p><b>Next, in order:</b> turn the five failures into development cases, write the rules those shapes need, and then freeze a <em>new</em> question set before scoring v5 — reusing this one would make it a development set. After that, repeated trials for variance, and per-category error analysis.</p>
+    </div>
+  </section>
+
+  <section id="contact" aria-labelledby="sa-contact-h">
+    <div class="contact">
+      <p class="kicker">Contact</p>
+      <h2 id="sa-contact-h">Hiring for prompt engineering or AI evaluation?</h2>
+      <a class="mail" href="mailto:jason@cobblestonepos.com?subject=Prompt%20engineering%20%2F%20AI%20evaluation">jason@cobblestonepos.com</a> <!-- scan:allow -->
+      <p class="small">Every prompt, case, rubric and run file behind this page is public — <a href="https://github.com/CobblestoneSolutions/cobblestone-ai-evals">read the repository</a> or ask me to walk you through it.</p>
     </div>
   </section>
 
