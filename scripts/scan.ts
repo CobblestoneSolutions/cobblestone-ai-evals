@@ -18,8 +18,25 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const SKIP_DIRS = new Set(['node_modules', '.git', 'cache', 'raw']);
 const SKIP_FILES = new Set(['.env', '.scan-denylist', 'package-lock.json']);
-/** Binary = has a NUL byte in the first 8 KB. Binaries (images, PDFs) can't be text-scanned. */
-const isBinary = (buf: Buffer) => buf.subarray(0, 8192).includes(0);
+/**
+ * Binary = a known binary extension, or a NUL byte in the first 8 KB.
+ *
+ * The NUL test alone is not enough. A PDF written by a generator that leaves its text streams
+ * uncompressed has no NUL near the top, so it gets scanned as text -- and then the zero-padded byte
+ * offsets in its xref table trip the card-number rule, while its real, deliberately published
+ * contact details trip the email and denylist rules. Extension decides first; the NUL test
+ * still catches binaries with no telling extension. Binaries are reported as not scanned, and
+ * `portfolio-site/DEPLOY.md` makes eyeballing resume.pdf a human checklist item.
+ */
+const BINARY_EXT = new Set([
+  'pdf', 'png', 'jpg', 'jpeg', 'gif', 'webp', 'ico', 'bmp', 'tiff',
+  'woff', 'woff2', 'ttf', 'otf', 'eot',
+  'zip', 'gz', 'tgz', 'bz2', 'xz', '7z', 'rar',
+  'mp3', 'mp4', 'mov', 'wav', 'ogg', 'webm',
+  'xlsx', 'xlsm', 'docx', 'pptx', 'exe', 'dll', 'so', 'dylib', 'wasm',
+]);
+const hasBinaryExt = (path: string) => BINARY_EXT.has((path.split('.').pop() ?? '').toLowerCase());
+export const isBinary = (buf: Buffer, path = '') => hasBinaryExt(path) || buf.subarray(0, 8192).includes(0);
 
 export interface Finding { file: string; line: number; rule: string; match: string }
 
@@ -132,7 +149,7 @@ function main() {
     const base = rel.split('/').pop()!;
     if (SKIP_FILES.has(base) || rel.split('/').some((p) => SKIP_DIRS.has(p))) continue;
     const buf = readFileSync(abs);
-    if (isBinary(buf)) { unscanned.push(rel); continue; }
+    if (isBinary(buf, rel)) { unscanned.push(rel); continue; }
     findings.push(...scanText(buf.toString('utf8'), rel, deny));
   }
   if (!deny.length) console.warn('scan: no .scan-denylist found — real names/domains are NOT being checked. See scripts/scan.ts.');

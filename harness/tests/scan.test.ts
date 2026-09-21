@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { scanText } from '../../scripts/scan.ts';
+import { isBinary, scanText } from '../../scripts/scan.ts';
 
 const rules = (t: string, deny: string[] = []) => scanText(t, 'f', deny).map((f) => f.rule);
 
@@ -56,4 +56,13 @@ test('scan:allow exempts a line only as a TRAILING marker', () => {
   // The same gate governs denylist terms, not just the regex rules.
   assert.deepEqual(scanText('Welcome to REAL SHOP scan:allow', 'f', ['real shop']), []); // scan:allow
   assert.equal(scanText('a scan:allow line naming REAL SHOP mid-sentence', 'f', ['real shop']).length, 1); // scan:allow
+});
+
+test('a PDF is binary by extension even with no NUL byte near the top', () => {
+  // An uncompressed-stream PDF has no early NUL, so the NUL test alone would scan it as text
+  // and trip on its xref offsets and its deliberately published contact details.
+  const noNul = Buffer.from('%PDF-1.4\n/URI (https://example.com/)\n');
+  assert.equal(isBinary(noNul, 'portfolio-site/src/resume.pdf'), true);
+  assert.equal(isBinary(noNul, 'notes/readme.md'), false);
+  assert.equal(isBinary(Buffer.from('a\0b'), 'notes/readme.md'), true);
 });
