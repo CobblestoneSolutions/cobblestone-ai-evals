@@ -13,107 +13,142 @@
       <a href="#approach">Approach</a>
       <a href="#about">About</a>
       <a href="resume.pdf">Résumé</a>
-      <a href="#contact">Contact</a>
     </nav>
   </header>
 
-  <div class="hero" id="main">
-    <p class="role">Prompt engineering &amp; AI evaluation</p>
-    <h1>I build prompts, <em>and I test where they fail.</em></h1>
-    <p class="lede">I spent 25 years running restaurants, 15 of them as an owner, and now I build the AI that works in them: customer support that knows when to hand off, agents that run a real sales pipeline, and the evals that say whether any of it is safe to ship.</p>
+  <div class="hero split" id="main">
+    <p class="role">Prompt engineering · AI evaluation · Applied AI</p>
+    <h1>I build practical AI systems—<em>and test where they fail.</em></h1>
+    <p class="lede">I turn 25 years of restaurant operations into AI workflows for customer support, sales and daily operations. I define the requirements, design the prompts, evaluate the behavior, and own what ships.</p>
     <div class="actions">
-      <a class="btn" href="#eval">See the evaluation work</a>
+      <a class="btn" href="#work">Explore selected work</a>
       <a class="btn ghost" href="resume.pdf">Résumé (PDF)</a>
     </div>
     <p class="inline-links">
-      <a href="mailto:jason@cobblestonepos.com">jason@cobblestonepos.com</a> <!-- scan:allow -->
+      <a class="lead" href="mailto:jason@cobblestonepos.com">jason@cobblestonepos.com</a> <!-- scan:allow -->
       <a href="https://www.linkedin.com/in/jason-dicken">LinkedIn</a>
       <a href="https://github.com/CobblestoneSolutions">GitHub</a>
-      <a href="https://www.youtube.com/@CobbleStonePos">Product demos</a>
     </p>
-    <p class="where">Evansville, Indiana · open to remote roles · U.S. Marine Corps veteran</p>
+    <p class="where">Evansville, Indiana · open to remote roles</p>
+
+    <aside class="ev" aria-labelledby="ev-h">
+      <h2 id="ev-h">Latest measured result</h2>
+      <div class="pair">
+        <span class="num">27/40 → 40/40</span>
+        <span class="cap">A support-assistant prompt over four versions, on the 40-case development set it was tuned against.</span>
+      </div>
+      <div class="rule"></div>
+      <div class="pair">
+        <span class="num warn">4/9</span>
+        <span class="cap">The same final prompt on nine fresh questions, run once. Fresh questions exposed five failures the development set missed.</span>
+      </div>
+      <p class="note">Answering model <code>claude-haiku-4-5</code>, graded by <code>claude-sonnet-4-5</code> against written rubrics. Every figure is computed from a recorded run file.</p>
+      <p class="inline-links">
+        <a href="support-assistant.html">Read the case study</a>
+        <a href="https://github.com/CobblestoneSolutions/cobblestone-ai-evals/tree/main/01-support-assistant/evals/results">Run files</a>
+      </p>
+    </aside>
   </div>
 
-  <section id="eval">
-    <div class="intro">
-      <p class="kicker">Evaluation project</p>
-      <h2>A support assistant that knows when to stop talking</h2>
-      <p>A shop's chat assistant answers the easy questions well. The ones that matter are the ones it shouldn't answer: allergy questions, refunds, and angry customers. I wrote a TypeScript harness, 40 test cases and four prompt versions to measure that before any customer saw it.</p>
+  <section id="work" aria-labelledby="work-h">
+    <div class="lead-in">
+      <p class="kicker">Selected work</p>
+      <h2 id="work-h">Two projects worth your time</h2>
+      <p class="small">One is measured and public. One runs a business every day and has no evaluation yet. Both say which is which.</p>
     </div>
 
-    <div class="part">
+    <article class="project" id="eval">
+      <div class="head">
+        <p class="kicker">Evaluation project · public repository</p>
+        <h3>A support assistant that knows when to stop talking</h3>
+      </div>
+      <dl class="pmeta">
+        <div><dt>Problem</dt><dd>A shop's chat assistant answers the easy questions well. The ones that matter are the ones it should not answer: allergy questions, refunds, and angry customers.</dd></div>
+        <div><dt>My role</dt><dd>I set the behavior rules, wrote every prompt revision, wrote the held-out questions from real customer messages, and read every failure. Coding agents wrote the harness to my spec and drafted the first case set; I reviewed and ran it.</dd></div>
+        <div><dt>Evidence</dt><dd>Four prompt versions, 40 development cases, 9 held-out questions, five recorded runs — all public, with the judge and the checks beside them.</dd></div>
+        <div><dt>Status</dt><dd>Complete as an evaluation. Nothing here says the assistant is ready for customers; the held-out run is the reason why.</dd></div>
+      </dl>
       <div class="results">
         <div class="result">
           <span class="lab">Development set · 40 cases</span>
-          <b>27 → 40</b>
-          <p>Passing cases, v1 to v4. The set I read the failures from and tuned each prompt against.</p>
+          <b>27/40 → 40/40</b>
+          <p>Passing cases, v1 to v4. The set I read the failures from and tuned each prompt against, so this measures fit, not generalization.</p>
         </div>
         <div class="result held">
-          <span class="lab">Held-out set · 9 questions</span>
-          <b>4 / 9</b>
-          <p>Questions the prompt had never seen, run once against the same v4. This is the number that tells you something.</p>
+          <span class="lab">Fresh questions · 9 cases</span>
+          <b>4/9</b>
+          <p>The same v4 prompt on nine questions it had never seen, run once. Fresh questions exposed five failures the development set missed.</p>
         </div>
       </div>
-      <p class="text">A perfect score on the set you tuned against measures development-set performance. It says nothing about whether the prompt generalizes, which is why I wrote a second set and ran it once. The assistant passed the four questions that resemble the development cases — hours, delivery, a dietary question, and praise — and failed all five that don't: someone reporting they felt sick, a missing item, a wasted trip to a closed shop, a self-serve question, and an ask for a free scoop.</p>
-      <p><a href="support-assistant.html">Read the full case study</a> — dataset provenance, the prompt that failed, the judge, per-version results and what I'd do next.</p>
-    </div>
-  </section>
+      <p class="more">
+        <a href="support-assistant.html">Read the case study</a>
+        <a href="https://github.com/CobblestoneSolutions/cobblestone-ai-evals/tree/main/01-support-assistant/prompts">The four prompts</a>
+        <a href="https://github.com/CobblestoneSolutions/cobblestone-ai-evals/blob/main/01-support-assistant/evals/cases.jsonl">Test cases</a>
+        <a href="https://github.com/CobblestoneSolutions/cobblestone-ai-evals/blob/main/harness/checks/judge.ts">The judge</a>
+      </p>
+    </article>
 
-  <section id="crm">
-    <div class="intro">
-      <p class="kicker">Production agent system</p>
-      <h2>An agent fleet that can't send anything without me</h2>
-      <p>The CRM my business runs on every day has an orchestrator agent over 18 specialists. They research, qualify, draft and queue. Exactly one module is allowed to send an email or a text, and only after a human approves the row, which is enforced in code rather than by convention.</p>
-    </div>
-    <div class="part">
+    <article class="project" id="crm">
+      <div class="head">
+        <p class="kicker">Cobblestone CRM · production agent system</p>
+        <h3>An agent fleet that cannot send anything without me</h3>
+      </div>
+      <dl class="pmeta">
+        <div><dt>Problem</dt><dd>The work that closes deals — research, qualification, proposals, follow-up timing — was all manual, and an agent allowed to email a customer unsupervised is a liability, not a feature.</dd></div>
+        <div><dt>My role</dt><dd>I own the requirements, the architecture, the prompt for Oreo — the orchestrator — and for all 18 specialists, plus the review, the deployment and the daily operation. Coding agents wrote most of the implementation. When it is wrong in production, it is mine to fix.</dd></div>
+        <div><dt>Evidence</dt><dd>The approval path is diagrammed in the case study from the running system. The repository is private, so there is no code link — a walkthrough on request.</dd></div>
+        <div><dt>Status</dt><dd>Daily production use, running my own business. Formal evaluation pending: no test set exists for this fleet, so no accuracy claim is made for it anywhere on this site.</dd></div>
+      </dl>
       <ol class="flow">
         <li><h4>A request comes in</h4><p>From the dashboard chat, from Telegram, or from one of 20+ scheduled jobs.</p></li>
-        <li><h4>The orchestrator routes it</h4><p>It holds every tool: pipeline, contacts, activity logging, Gmail read and draft, calendar, and agent dispatch.</p></li>
-        <li><h4>A specialist does the work</h4><p>18 of them, from lead qualification and proposals to compliance review. None has database access of its own.</p></li>
-        <li class="gate"><h4>I approve the send</h4><p>Drafts queue as a PendingAction row. Nothing customer-facing leaves without a human clicking approve.</p></li>
+        <li><h4>Oreo routes it</h4><p>The orchestrator holds every tool: pipeline, contacts, activity logging, Gmail read and draft, calendar, and agent dispatch.</p></li>
+        <li><h4>A specialist does the work</h4><p>Oreo hands off to one of 18, from lead qualification and proposals to compliance review. None has database access of its own.</p></li>
+        <li class="gate"><h4>I approve the send</h4><p>Customer-facing drafts queue as a PendingAction row. Email, text and proposals do not leave until a human approves them.</p></li>
       </ol>
-      <p><a href="crm.html">How it's built</a> — the two calling conventions, cost control, vision extraction, and what I specified versus what coding agents wrote.</p>
-    </div>
+      <p class="more">
+        <a href="crm.html">Read the case study</a>
+      </p>
+    </article>
   </section>
 
-  <section id="work">
-    <div class="intro">
-      <p class="kicker">Other work</p>
-      <h2>Software real businesses use</h2>
+  <section id="more" aria-labelledby="more-h">
+    <div class="lead-in">
+      <p class="kicker">Also shipped</p>
+      <h2 id="more-h">Software real businesses use</h2>
     </div>
     <div class="work">
       <article>
-        <div><h3>Daisy</h3><div class="with">Restaurant owner's assistant, inside the POS</div><div class="state">Production · evals planned</div></div>
-        <div><p>The answers an owner needs are in the POS database, but getting them means knowing which report to run. Daisy is the one agent the owner talks to: she takes the question in plain English, hands it to the agents for sales, food cost, inventory and mid-shift troubleshooting, and brings back the answer from live shop data instead of a canned report.</p><p>She has no test set yet. That is the next evaluation project, and until it exists I can't tell you how often she is right.</p></div>
+        <div><h3>Cobblestone POS, and Daisy</h3><div class="with">Node.js · Express · Firebase · Firestore · Next.js</div><div class="state">Production · no evals yet</div></div>
+        <div><p>Off-the-shelf systems are expensive and do not fit how small shops actually run, so I built my own and ran my ice cream shop on it: online ordering, a merchant site, digital menu boards, a DoorDash integration and a bar-inventory module.</p><p>Daisy is the assistant inside it. The answers an owner needs are in the POS database, but getting them means knowing which report to run — so the owner asks Daisy in plain English and she routes to agents for sales, food cost, inventory and mid-shift troubleshooting. She has no test set yet, so I cannot tell you how often she is right.</p></div>
       </article>
       <article>
-        <div><h3>Cobblestone POS</h3><div class="with">Node.js · Express · Firebase Cloud Functions · Firestore · Next.js</div><div class="state">Production</div></div>
-        <div><p>Off-the-shelf systems are expensive and don't fit how small shops actually run, so I built my own and ran my ice cream shop on it. It now carries online ordering, a merchant site, digital menu boards, a DoorDash integration and a bar-inventory module with a ~600-drink catalog.</p></div>
+        <div><h3>Cobblestone Perks</h3><div class="with">Loyalty and marketing · part of Cobblestone Restaurant Solutions</div><div class="state">Production · no evals yet</div></div>
+        <div><p>Marketing is the first thing an owner drops on a busy week, and loyalty programs die the same way. Perks holds the rewards side — offers and punch cards tied to the POS — and its marketing agent plans and drafts a month of promotions, posts and send dates in under an hour, so the month exists before the week gets away from you.</p></div>
       </article>
       <article>
-        <div><h3>Cobblestone Galley</h3><div class="with">React · TypeScript · Supabase · Capacitor</div><div class="state">In development</div></div>
-        <div><p>Barge kitchens order food by phone and paper, and no one can see what's on the shelf. Galley is an offline-first inventory and ordering app the chef, cook and captain share on one tablet: the chef requests, the captain approves, the purchase order goes out by email.</p><p>Built by two AI coding agents in one codebase, coordinated with a written baton protocol and a log of locked decisions.</p></div>
+        <div><h3>Cobblestone Galley</h3><div class="with">React · TypeScript · Supabase · Capacitor</div><div class="state">In development · not shipped</div></div>
+        <div><p>Barge kitchens order food by phone and paper, and no one can see what is on the shelf. Galley is an offline-first inventory and ordering app the chef, cook and captain share on one tablet: the chef requests, the captain approves, the purchase order goes out by email. Built by two AI coding agents in one codebase, coordinated with a written baton protocol and a log of locked decisions.</p></div>
       </article>
       <article>
         <div><h3>The Owner's Notebook</h3><div class="with">Python · static site pipeline</div><div class="state">Published</div></div>
-        <div><p>A 200-article library of food-cost, waste and par-level guides with Excel worksheets, produced by a content pipeline. When the first version read as generic AI voice, I rebuilt the pipeline rather than editing the output.</p></div>
+        <div><p>A library of food-cost, waste and par-level guides produced by a content pipeline. When the first version read as generic AI voice, I rebuilt the pipeline rather than editing the output.</p></div>
       </article>
     </div>
   </section>
 
-  <section id="approach">
-    <div class="intro">
+  <section id="approach" aria-labelledby="approach-h">
+    <div class="lead-in">
       <p class="kicker">Approach</p>
-      <h2>What I actually do</h2>
+      <h2 id="approach-h">How I work</h2>
     </div>
     <div class="three">
       <article>
-        <h3>I specify, review and test; agents write most of the code</h3>
-        <p>Claude Code and Codex write the bulk of the implementation. I write the specs and the prompts, decide the architecture, read the diffs, run the tests and own what ships. The evaluation harness, the 40 cases and the four prompt versions are mine, line by line, because that is the part no agent can infer.</p>
+        <h3>I specify, review and own; agents write most of the code</h3>
+        <p>Claude Code and Codex write the bulk of the implementation. I own requirements, architecture, the agent and system prompts, review, testing, deployment and operation. On the evaluation project that also means the behavior rules in every prompt version, the held-out questions, and reading every failure myself.</p>
       </article>
       <article>
         <h3>Decisions get written down</h3>
-        <p>Every project keeps a handoff document and a dated decision log, so an agent picking up the work reads the same constraints I'd repeat. From Galley's log: vendors are shoppers, not warehouses, so no line prices anywhere and spend is the typed receipt total. That is the part a model cannot infer from the codebase.</p>
+        <p>Every project keeps a handoff document and a dated decision log, so an agent picking up the work reads the same constraints I would otherwise repeat. From Galley's log: vendors are shoppers, not warehouses, so no line prices anywhere and spend is the typed receipt total. That is the part a model cannot infer from the codebase.</p>
       </article>
       <article>
         <h3>One writer at a time</h3>
@@ -121,18 +156,18 @@
       </article>
       <article>
         <h3>Prompts drift, so they get audited</h3>
-        <p>A system prompt is code no test covers. My CRM orchestrator still described "a team of sixteen specialist agents" months after the fleet had grown to eighteen: true when written, wrong for months, invisible. I audit what gets written about a project the same way, against the run files.</p>
+        <p>A prompt is code, but nothing tests it unless you write the test on purpose: versioned files, a recorded run per version, and an audit against what the system actually does. My CRM orchestrator still described "a team of sixteen specialist agents" months after the fleet had grown to eighteen — true when written, wrong for months, invisible until someone read it against the code.</p>
       </article>
     </div>
   </section>
 
-  <section id="about">
+  <section id="about" aria-labelledby="about-h">
     <div class="about">
       <div class="text">
         <p class="kicker">About</p>
-        <h2>An operator first</h2>
+        <h2 id="about-h">An operator first</h2>
         <p>I started a restaurant with $10,000 and grew it into a 13-location chain across three states. Later I built an ice cream shop, wrote the software that ran it, and sold it. I spent three years as a SCORE mentor helping small business owners, and before any of that I was a Marine.</p>
-        <p>That's why I build AI the way I do. In a restaurant, a wrong answer about an allergy isn't a bug report. It's a kid in the hospital. So I test for it first.</p>
+        <p>That is why I build AI the way I do. In a restaurant, a wrong answer about an allergy is not a bug report. So I test for it first.</p>
       </div>
       <ul class="years" aria-label="Timeline">
         <li><span>2025–</span><span>Cobblestone Restaurant Solutions: CRM, POS, Perks, Galley, the Owner's Notebook</span></li>
@@ -150,21 +185,22 @@
     </dl>
   </section>
 
-  <section id="contact">
+  <section id="contact" aria-labelledby="contact-h">
     <div class="contact">
       <p class="kicker">Contact</p>
-      <h2>Hiring for prompt engineering or AI evaluation? Write me.</h2>
+      <h2 id="contact-h">Hiring for prompt engineering or AI evaluation? Write me.</h2>
       <a class="mail" href="mailto:jason@cobblestonepos.com">jason@cobblestonepos.com</a> <!-- scan:allow -->
       <p class="inline-links">
         <a href="https://www.linkedin.com/in/jason-dicken">LinkedIn</a>
         <a href="https://github.com/CobblestoneSolutions">GitHub</a>
         <a href="resume.pdf">Résumé (PDF)</a>
+        <a href="https://www.youtube.com/@CobbleStonePos">Product demos</a>
         <a href="https://cobblestonepos.com/">Cobblestone Restaurant Solutions</a>
       </p>
-      <p class="text">Evansville, Indiana. Open to remote work.</p>
+      <p class="small">Evansville, Indiana. Open to remote work. U.S. Marine Corps veteran.</p>
     </div>
     <footer>
-      <p>Every evaluation number on this site is computed from a recorded run file. The shop in the evaluation project is fictional; its facts, phone number and staff are invented.</p>
+      <p>Every evaluation number on this site is computed from a recorded run file in the public repository. The shop in the evaluation project is fictional; its facts, phone number and staff are invented.</p>
     </footer>
   </section>
 </div>

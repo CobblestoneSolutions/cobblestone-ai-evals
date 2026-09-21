@@ -1,6 +1,20 @@
 # Deploying jason.cobblestonepos.com
 
-One static HTML file on the VPS that already runs the CRM behind nginx. No build step, no Node process, nothing added to the POS site.
+A small static **directory** on the VPS that already runs the CRM behind nginx. No Node process,
+nothing added to the POS site.
+
+The site is four files plus the PDF, built by `python3 build-site.py` into `portfolio-site/dist/`:
+
+```
+dist/index.html              the homepage
+dist/support-assistant.html  case study: the evaluation
+dist/crm.html                case study: the CRM agent fleet
+dist/style.css               shared stylesheet — all three pages need it
+dist/resume.pdf
+```
+
+Deploy the **whole `dist/` directory**. Uploading `index.html` alone leaves the case studies
+and the stylesheet stale, and the homepage links straight to both.
 
 Everything below is run in the VS Code terminal connected to the VPS, except step 1.
 
@@ -34,10 +48,12 @@ sudo mkdir -p /var/www/jason-portfolio
 sudo chown -R $USER:$USER /var/www/jason-portfolio
 ```
 
-Then in VS Code: open `/var/www/jason-portfolio` and drag `index.html` into it (or right-click the folder → Upload). Confirm:
+Then in VS Code: open `/var/www/jason-portfolio` and drag the **contents of `dist/`** into it
+(all five files, not the folder itself). Confirm:
 
 ```bash
-ls -l /var/www/jason-portfolio/index.html
+ls -l /var/www/jason-portfolio
+# index.html  support-assistant.html  crm.html  style.css  resume.pdf
 ```
 
 ---
@@ -59,14 +75,20 @@ server {
     root /var/www/jason-portfolio;
     index index.html;
 
-    # one page; anything else falls back to it
+    # real files first; unknown paths fall back to the homepage
     location / {
         try_files $uri $uri/ /index.html;
     }
 
-    # the page changes when you republish — don't let browsers cache it for long
-    location = /index.html {
+    # the pages change when you rebuild — don't let browsers cache them for long
+    location ~* \.(html|css)$ {
         add_header Cache-Control "public, max-age=300, must-revalidate";
+    }
+
+    # the PDF changes rarely
+    location = /resume.pdf {
+        add_header Cache-Control "public, max-age=86400";
+        add_header Content-Disposition "inline; filename=\"jason-dicken-resume.pdf\"";
     }
 
     gzip on;
@@ -95,11 +117,14 @@ sudo systemctl reload nginx
 ## 4. Check it over HTTP
 
 ```bash
-curl -I http://jason.cobblestonepos.com
-# HTTP/1.1 200 OK
+for p in / /support-assistant.html /crm.html /style.css /resume.pdf; do
+  curl -o /dev/null -sw "%{http_code} %{content_type}  $p\n" http://jason.cobblestonepos.com$p
+done
+# 200 text/html … 200 text/css … 200 application/pdf
 ```
 
-Open it in a browser too. It should look exactly like the artifact version.
+All five must be 200, and `resume.pdf` must come back as `application/pdf` — a browser's blank
+PDF viewer does not prove the file is broken, so check the response and a download separately.
 
 ---
 
@@ -132,18 +157,20 @@ The portfolio already links back to cobblestonepos.com in its footer.
 
 ---
 
-## Updating the page later
+## Updating the site later
 
-The page is built from one source file, so an update is: rebuild, upload, done.
+**Edit `src/`, never `dist/`.** `dist/` is regenerated and your edits there are silently
+overwritten. The build also stamps the date into `dist/index.html`, so that file changes on
+every rebuild even when nothing else did.
 
 ```bash
-# on your machine, in the folder with build-site.py
-python3 build-site.py         # writes site/index.html from portfolio/index.html
+# on your machine, in portfolio-site/
+python3 build-site.py         # writes dist/ from src/
 ```
 
-Then drag the new `index.html` into `/var/www/jason-portfolio` in VS Code, replacing the old one. No nginx reload needed. Hard-refresh (Ctrl+F5) to beat the 5-minute cache.
-
-Keep republishing the artifact version too, so the link you've already shared stays current.
+Then drag the changed files from `dist/` into `/var/www/jason-portfolio` in VS Code, replacing
+the old ones. If `style.css` changed, upload it too — all three pages share it. No nginx reload
+needed. Hard-refresh (Ctrl+F5) to beat the 5-minute cache.
 
 ---
 
@@ -156,11 +183,16 @@ Keep republishing the artifact version too, so the link you've already shared st
 | 404 | File isn't where `root` points | `ls /var/www/jason-portfolio` |
 | certbot fails to validate | DNS not propagated, or port 80 blocked | Re-run step 1's `dig`; confirm the firewall allows 80 and 443 (`sudo ufw status`) |
 | Fonts don't load | The VPS blocks outbound, or the visitor does | Harmless — the page falls back to system fonts by design |
+| Case study loads unstyled | `style.css` wasn't uploaded, or only `index.html` was | Upload the whole `dist/` contents |
 
 ---
 
 ## Before you point anyone at it
 
-- [ ] GitHub, LinkedIn and resume links are on the page (still missing — nothing links out yet)
-- [ ] The README judge-model error in the evals repo is fixed, since the page will drive people to that repo
+- [ ] All five files uploaded, not just `index.html`
 - [ ] `https://jason.cobblestonepos.com` loads on your phone, not just the desktop
+- [ ] The GitHub source links on the case study resolve — they point at
+      `github.com/CobblestoneSolutions/cobblestone-ai-evals`, which must stay public and keep
+      its current paths
+- [ ] You have eyeballed `resume.pdf`: it is binary, the repo scanner cannot read it, and it
+      carries whatever contact details you put in it

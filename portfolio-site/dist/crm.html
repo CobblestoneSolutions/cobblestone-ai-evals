@@ -4,12 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Cobblestone CRM agent fleet — Jason Dicken</title>
-<meta name="description" content="A production CRM with an orchestrator agent over 18 specialists, where nothing customer-facing sends without human approval.">
+<meta name="description" content="A production CRM whose orchestrator agent, Oreo, runs 18 specialists — and where nothing customer-facing sends without human approval.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;600&display=swap">
 <link rel="stylesheet" href="style.css">
-<style>:root{color-scheme:light dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
+<style>:root{color-scheme:light dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}
+figure.diagram svg{max-width:460px;margin-inline:auto}</style>
 </head>
 <body>
 <div class="wrap">
@@ -21,58 +22,116 @@
       <a href="./#approach">Approach</a>
       <a href="./#about">About</a>
       <a href="resume.pdf">Résumé</a>
-      <a href="./#contact">Contact</a>
     </nav>
   </header>
 
   <div class="hero" id="main">
     <p class="role">Case study · production agent system</p>
-    <h1>An agent fleet that can't send anything without me</h1>
-    <p class="lede">The work that closes deals — research, qualification, proposals, follow-up timing — was all manual. The CRM I built and now run my business on has an orchestrator agent over 18 specialists that do that work and queue it. Exactly one module is allowed to send, and only after a human approves the row.</p>
+    <h1>An agent fleet that cannot send anything without me</h1>
+    <p class="lede">The work that closes deals — research, qualification, proposals, follow-up timing — was all manual. The CRM I specified and now run my business on has an orchestrator agent — Oreo — over 18 specialists that do that work and queue it. Exactly one module is allowed to send, and only after a human approves the row.</p>
   </div>
 
-  <section id="shape">
+  <section id="summary" aria-labelledby="summary-h">
+    <h2 id="summary-h" class="kicker">In short</h2>
+    <dl class="summary">
+      <div><dt>Problem</dt><dd>Pipeline research, qualification, proposals and follow-up timing were manual. An agent allowed to email a customer unsupervised is a liability, not a feature.</dd></div>
+      <div><dt>My contribution</dt><dd>I own the requirements, the architecture, Oreo's prompt and the 18 specialist prompts, the review, the deployment and the daily operation. AI coding tools wrote most of the implementation. When it is wrong in production, it is mine to fix.</dd></div>
+      <div><dt>Evidence</dt><dd>The approval path below is drawn from the running system. The repository is private, so there is no code link — a walkthrough on request.</dd></div>
+      <div><dt>Status</dt><dd>Daily production use; formal evaluation pending. No test set exists for this fleet, so no accuracy claim is made for it anywhere on this site.</dd></div>
+    </dl>
+  </section>
+
+  <section id="shape" aria-labelledby="shape-h">
     <div class="part">
-      <h2>What it is</h2>
+      <h2 id="shape-h">What it is</h2>
       <div class="scroll">
         <table>
           <tbody>
-            <tr><th>Stack</th><td>Python, FastAPI, SQLAlchemy, APScheduler, Anthropic API, Twilio, Google Workspace APIs, Deepgram, JWT auth, pytest, Ubuntu VPS behind nginx</td></tr>
-            <tr><th>Size</th><td>51 database tables, 315 API endpoints across 30+ routers, 20+ recurring jobs, an Android companion app</td></tr>
-            <tr><th>Models</th><td>Opus orchestrates; Sonnet and Haiku do the bounded specialist work</td></tr>
-            <tr><th>Status</th><td>In daily production use, running my own business. Built in about seven weeks.</td></tr>
-            <tr><th>Evaluated?</th><td>Not yet. No test set exists for the fleet, so no accuracy claim is made anywhere on this site.</td></tr>
+            <tr><th scope="row">Stack</th><td>Python, FastAPI, SQLAlchemy, APScheduler, Anthropic API, Twilio, Google Workspace APIs, Deepgram, JWT auth, pytest, Ubuntu VPS behind nginx</td></tr>
+            <tr><th scope="row">Size</th><td>51 database tables, 315 API endpoints across 30+ routers, 20+ recurring jobs, an Android companion app</td></tr>
+            <tr><th scope="row">Agents</th><td>19 agent classes: <b>Oreo</b>, the orchestrator, plus 18 specialists. Specialists never touch the database; everything routes through Oreo.</td></tr>
+            <tr><th scope="row">Models</th><td>Opus orchestrates; Sonnet and Haiku do the bounded specialist work</td></tr>
+            <tr><th scope="row">Status</th><td>In daily production use, running my own business. Built in about seven weeks.</td></tr>
+            <tr><th scope="row">Evaluated?</th><td>Not yet. No test set exists for the fleet, so no accuracy claim is made anywhere on this site.</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <section id="flow">
+  <section id="flow" aria-labelledby="flow-h">
     <div class="intro">
       <p class="kicker">The shape of it</p>
-      <h2>How a request moves through</h2>
+      <h2 id="flow-h">How a request moves through</h2>
+      <p>Every path that reaches a customer ends at the same row in the same table, and that row does nothing until a person clicks approve.</p>
     </div>
+
     <div class="part">
-      <ol class="flow">
-        <li><h4>A request comes in</h4><p>From the dashboard chat, from a Telegram bot, or from one of 20+ scheduled jobs. Eight agents run daily and produce automated briefings.</p></li>
-        <li><h4>The orchestrator routes it</h4><p>It holds every tool — about 25: pipeline reads and writes, contact CRUD, activity logging, Gmail read and draft, calendar create and reschedule, and agent dispatch.</p></li>
-        <li><h4>A specialist does the work</h4><p>18 of them: lead qualification, follow-up scheduling, proposals, pipeline analytics, lead scraping, customer health, competitor and product research, sales coaching, onboarding, support, pricing, compliance review, data hygiene, marketing calendar, social content, task automation.</p></li>
-        <li class="gate"><h4>A human approves the send</h4><p>Drafts queue as a PendingAction row, reviewed in the dashboard or over Telegram. One module is permitted to send email or SMS. The rule is enforced in code, not by convention.</p></li>
-      </ol>
-      <p class="text">Specialists have no database access of their own and reach data only through the orchestrator. That keeps credentials and write access in one place and makes every agent run reviewable. The approval gate covers customer-facing email, text and proposals; internal actions such as logging activity, scoring a lead or scheduling a task are not gated.</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 420 566" role="img" aria-label="Flow diagram. A request arrives from the dashboard chat, Telegram, or one of twenty-plus scheduled jobs. It goes to Oreo, the orchestrator, which holds every tool and is the only agent with database access. Oreo dispatches a specialist agent, one of eighteen, which has no database access and returns either the work or a list of what it still needs. The specialist's work becomes a draft email, text or proposal, which is not sent. The draft is written to a PendingAction row, where a human approves or rejects it in the dashboard or over Telegram. Only after approval does the single sending module send it.">
+          <rect class="d-box" x="40" y="16" width="340" height="60" rx="3"></rect>
+          <text class="d-t" x="56" y="40">A request comes in</text>
+          <text class="d-s" x="56" y="61">dashboard chat · Telegram · 20+ jobs</text>
+
+          <path class="d-arrow" d="M210 76 L210 96"></path>
+          <polygon class="d-head" points="210,104 205,94 215,94"></polygon>
+
+          <rect class="d-box" x="40" y="104" width="340" height="74" rx="3"></rect>
+          <text class="d-t" x="56" y="128">Oreo — the orchestrator</text>
+          <text class="d-s" x="56" y="149">holds every tool; the only component</text>
+          <text class="d-s" x="56" y="167">with database access</text>
+
+          <path class="d-arrow" d="M210 178 L210 198"></path>
+          <polygon class="d-head" points="210,206 205,196 215,196"></polygon>
+
+          <rect class="d-box" x="40" y="206" width="340" height="74" rx="3"></rect>
+          <text class="d-t" x="56" y="230">A specialist — 1 of 18</text>
+          <text class="d-s" x="56" y="251">no database access; returns the work</text>
+          <text class="d-s" x="56" y="269">or a list of what it still needs</text>
+
+          <path class="d-arrow" d="M210 280 L210 300"></path>
+          <polygon class="d-head" points="210,308 205,298 215,298"></polygon>
+
+          <rect class="d-box" x="40" y="308" width="340" height="60" rx="3"></rect>
+          <text class="d-t" x="56" y="332">Draft</text>
+          <text class="d-s" x="56" y="353">email, text or proposal — not sent</text>
+
+          <path class="d-arrow" d="M210 368 L210 388"></path>
+          <polygon class="d-head" points="210,396 205,386 215,386"></polygon>
+
+          <rect class="d-box gate" x="40" y="396" width="340" height="74" rx="3"></rect>
+          <text class="d-gate-t" x="56" y="420">PendingAction — a human approves</text>
+          <text class="d-s" x="56" y="441">reviewed in the dashboard or over</text>
+          <text class="d-s" x="56" y="459">Telegram; nothing passes on its own</text>
+
+          <path class="d-arrow" d="M210 470 L210 490"></path>
+          <polygon class="d-head" points="210,498 205,488 215,488"></polygon>
+
+          <rect class="d-box" x="40" y="498" width="340" height="60" rx="3"></rect>
+          <text class="d-t" x="56" y="522">One module sends it</text>
+          <text class="d-s" x="56" y="543">enforced in code, not by convention</text>
+        </svg>
+        <figcaption>The path a customer-facing message takes. This is the architecture as built and as I operate it; it is a description of the design, not evidence that the implementation is secure or tested. The fleet has no test set yet.</figcaption>
+      </figure>
+
+      <ul class="gatekey">
+        <li><span class="tag on">Gated</span><span>Email, text messages and proposals — anything a customer receives. These queue as a PendingAction row and wait for a person.</span></li>
+        <li><span class="tag off">Not gated</span><span>Internal actions: logging an activity, scoring a lead, scheduling a task, writing a briefing. These run without approval, and nothing in that list reaches a customer.</span></li>
+      </ul>
+
+      <p class="text">Specialists have no database access of their own and reach data only through Oreo. That keeps credentials and write access in one place and makes every agent run reviewable.</p>
     </div>
   </section>
 
-  <section id="decisions">
+  <section id="decisions" aria-labelledby="decisions-h">
     <div class="intro">
       <p class="kicker">Decisions</p>
-      <h2>Four worth explaining</h2>
+      <h2 id="decisions-h">Four worth explaining</h2>
     </div>
     <div class="three">
       <article>
         <h3>Two ways to call an agent</h3>
-        <p><code>run_agent_skill</code> invokes a specialist for one schema-validated output: score this lead, write this proposal. <code>ask_agent</code> opens a persistent thread when the task needs judgment — the specialist replies with a <code>needs</code> list, the orchestrator fetches that data with its own tools, and the conversation continues. One is a function call; the other is a colleague who can ask a question back.</p>
+        <p><code>run_agent_skill</code> invokes a specialist for one schema-validated output: score this lead, write this proposal. <code>ask_agent</code> opens a persistent thread when the task needs judgment — the specialist replies with a <code>needs</code> list, Oreo fetches that data with its own tools, and the conversation continues. One is a function call; the other is a colleague who can ask a question back.</p>
       </article>
       <article>
         <h3>Knowing what it costs</h3>
@@ -89,14 +148,14 @@
     </div>
   </section>
 
-  <section id="ownership">
+  <section id="ownership" aria-labelledby="ownership-h">
     <div class="intro">
       <p class="kicker">Ownership</p>
-      <h2>What I did and what the coding agents did</h2>
+      <h2 id="ownership-h">What I did and what the coding agents did</h2>
     </div>
     <div class="text">
-      <p>Claude Code wrote most of the implementation. I wrote the specifications, the agent prompts and the decision log; chose the architecture, including the single-sender rule and the orchestrator-only data access; reviewed the diffs; ran the tests; and deployed and operate it. When something is wrong in production, it is mine to fix.</p>
-      <p>I am not claiming to have hand-written 315 endpoints, and I would not describe myself as a software engineer. What I'd claim is this: I can specify a system precisely enough that agents build the right thing, catch it when they don't, and run the result as a business depends on it.</p>
+      <p>I own requirements, architecture, agent prompts, review, testing, deployment and operation. AI coding tools — Claude Code, mostly — wrote most of the implementation. The decisions that shaped this system are mine: Oreo-only data access, one sending module, the approval gate, the model tiering, and the rule that a disagreement between the vision extractor and the regex classifier goes to a person rather than being auto-resolved.</p>
+      <p>I am not claiming to have hand-written 315 endpoints. What I claim is that I can specify a system precisely enough that agents build the right thing, catch it when they don't, and run the result as a business depends on it — because one does.</p>
       <p>The honest gap is measurement. This fleet has no evals. The next evaluation project is lead scoring and statement extraction, where being wrong costs money and the right answer is checkable — the same harness as the <a href="support-assistant.html">support assistant</a>.</p>
     </div>
   </section>
